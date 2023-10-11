@@ -1,4 +1,5 @@
 import '../../core/app_export.dart';
+import 'sign_in.dart';
 
 class SignUpScreen extends StatelessWidget {
   final TextEditingController fullNameController = TextEditingController();
@@ -10,6 +11,18 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.primaryColor,
+        title: Text(
+          'Sign Up To Play',
+          style: GoogleFonts.abhayaLibre(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            color: AppTheme.whiteColor,
+          ),
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -37,8 +50,15 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: fullNameController,
-                        decoration:
-                            const InputDecoration(labelText: 'Full Name'),
+                        decoration: InputDecoration(
+                          labelText: 'Full Name',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                       ),
                     ),
                     // Email Field
@@ -46,7 +66,15 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: emailController,
-                        decoration: const InputDecoration(labelText: 'Email'),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                       ),
                     ),
                     // Password Field
@@ -54,8 +82,15 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: passwordController,
-                        decoration:
-                            const InputDecoration(labelText: 'Password'),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                         obscureText: true,
                       ),
                     ),
@@ -72,24 +107,41 @@ class SignUpScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                         Text(
                           'Already have an account?',
-                          style: TextStyle(
+                          style:GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
                             color: AppTheme.whiteColor,
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Sign In',
-                            style: TextStyle(
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignInScreen()),
+                            );
+                          },
+                          child: Ink(
+                            decoration: const BoxDecoration(
                               color: AppTheme.primaryColor,
                             ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                              side: BorderSide.none,
+                            child: Container(
+                              // constraints: const BoxConstraints(
+                              //   maxWidth: 200.0, // Set a maximum width
+                              // ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(
+                                  8.0), // Add padding as needed
+                              child: const Text(
+                                'Sign In',
+                                style: TextStyle(
+                                  color: AppTheme.primaryColor, // Text color
+                                  fontSize: 18.0, // Text size
+                                ),
+                              ),
                             ),
                           ),
                         ),

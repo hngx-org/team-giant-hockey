@@ -1,36 +1,43 @@
-// signin_screen.dart
-import '../../controller/sign_in_controller.dart';
 import '../../core/app_export.dart';
-// Import necessary packages and files
 
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  SignInScreen({super.key});
+  SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(30),
-              height: 300,
+      appBar: AppBar(
+        backgroundColor: AppTheme.primaryColor,
+        title: Text(
+          'Sign In To Play',
+          style: GoogleFonts.abhayaLibre(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            color: AppTheme.whiteColor,
+          ),
+        ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(30),
+            height: 300,
+            width: double.infinity,
+            color: AppTheme.primaryColor,
+            child: SizedBox(
+              height: 227,
               width: double.infinity,
-              color: AppTheme.primaryColor,
-              child: SizedBox(
-                height: 257,
-                width: double.infinity,
-                child: Image.asset(
-                  ImageConstant.game_pad,
-                ),
+              child: Image.asset(
+                ImageConstant.game_pad,
               ),
             ),
-            Expanded(
+          ),
+          Expanded(
             child: Container(
               color: Colors.black, // Set the background color to black
               child: SingleChildScrollView(
@@ -41,7 +48,15 @@ class SignInScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: emailController,
-                        decoration: const InputDecoration(labelText: 'Email'),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                       ),
                     ),
                     // Password Field
@@ -49,7 +64,15 @@ class SignInScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: passwordController,
-                        decoration: const InputDecoration(labelText: 'Password'),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                         obscureText: true,
                       ),
                     ),
@@ -58,15 +81,53 @@ class SignInScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: AppButton(
-                        buttonText: 'Sign Up',
+                        buttonText: 'Sign In',
                         onPressed: () {},
                       ),
                     ),
                     const SizedBox(height: 20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?'),
-                        Text('Sign In'),
+                         Text(
+                          'Dont have an account?',
+                          style: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignInScreen(),
+                              ),
+                            );
+                          },
+                          child: Ink(
+                            decoration: const BoxDecoration(
+                              color: AppTheme.primaryColor,
+                            ),
+                            child: Container(
+                              // constraints: const BoxConstraints(
+                              //   maxWidth: 200.0, // Set a maximum width
+                              // ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(
+                                  8.0), // Add padding as needed
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: AppTheme.primaryColor, // Text color
+                                  fontSize: 18.0, // Text size
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -74,8 +135,7 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
           ),
-          ],
-        ),
+        ],
       ),
     );
   }
