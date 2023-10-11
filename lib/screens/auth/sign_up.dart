@@ -1,5 +1,3 @@
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -13,6 +11,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.all(30),
@@ -20,10 +19,10 @@ class SignUpScreen extends StatelessWidget {
             width: double.infinity,
             color: AppTheme.primaryColor,
             child: SizedBox(
-              height: 257,
+              height: 227,
               width: double.infinity,
-              child: SvgPicture.asset(
-                ImageSvgConstant.game_pad,
+              child: Image.asset(
+                ImageConstant.game_pad,
               ),
             ),
           ),
@@ -38,7 +37,8 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: fullNameController,
-                        decoration: const InputDecoration(labelText: 'Full Name'),
+                        decoration:
+                            const InputDecoration(labelText: 'Full Name'),
                       ),
                     ),
                     // Email Field
@@ -54,7 +54,8 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: passwordController,
-                        decoration: const InputDecoration(labelText: 'Password'),
+                        decoration:
+                            const InputDecoration(labelText: 'Password'),
                         obscureText: true,
                       ),
                     ),
@@ -69,9 +70,29 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?'),
-                        Text('Sign In'),
+                        const Text(
+                          'Already have an account?',
+                          style: TextStyle(
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: AppTheme.primaryColor,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                              side: BorderSide.none,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],

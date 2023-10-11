@@ -1,9 +1,6 @@
 // signin_screen.dart
-import 'package:flutter_svg/svg.dart';
-
 import '../../controller/sign_in_controller.dart';
 import '../../core/app_export.dart';
-import 'package:flutter/material.dart';
 // Import necessary packages and files
 
 class SignInScreen extends StatelessWidget {
@@ -28,8 +25,8 @@ class SignInScreen extends StatelessWidget {
               child: SizedBox(
                 height: 257,
                 width: double.infinity,
-                child: SvgPicture.asset(
-                  ImageSvgConstant.game_pad,
+                child: Image.asset(
+                  ImageConstant.game_pad,
                 ),
               ),
             ),
