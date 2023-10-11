@@ -6,7 +6,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
 
+import 'package:device_preview/device_preview.dart';
+
+
 import 'screens/auth/sign_up.dart';
+
 
 AppTheme appTheme = AppTheme();
 void main() async {
@@ -37,4 +41,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

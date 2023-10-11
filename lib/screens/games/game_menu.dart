@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/controller/menu_controller.dart';
 import 'package:team_giant_hockey/core/utils/image_constants.dart';
-import 'package:team_giant_hockey/main.dart';
 import 'package:team_giant_hockey/screens/games/game_screen.dart';
 import 'package:team_giant_hockey/screens/settings/game_rule.dart';
 import 'package:team_giant_hockey/screens/settings/leaderboard.dart';
@@ -12,7 +11,6 @@ import 'package:team_giant_hockey/screens/settings/settings.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
 import 'package:team_giant_hockey/widgets/custom_text.dart';
 import 'package:team_giant_hockey/widgets/size_config.dart';
-import 'package:flutter/services.dart';
 
 class GameMenuScreen extends StatefulWidget {
   const GameMenuScreen({super.key});
