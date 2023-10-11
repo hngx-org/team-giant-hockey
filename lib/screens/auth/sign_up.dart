@@ -1,4 +1,5 @@
 import '../../core/app_export.dart';
+import 'sign_in.dart';
 
 class SignUpScreen extends StatelessWidget {
   final TextEditingController fullNameController = TextEditingController();
@@ -106,15 +107,22 @@ class SignUpScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                         Text(
                           'Already have an account?',
-                          style: TextStyle(
+                          style:GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
                             color: AppTheme.whiteColor,
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Your button's action here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignInScreen()),
+                            );
                           },
                           child: Ink(
                             decoration: const BoxDecoration(

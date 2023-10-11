@@ -1,10 +1,10 @@
 import '../../core/app_export.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  SignUpScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class SignUpScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: AppButton(
-                        buttonText: 'Sign Up',
+                        buttonText: 'Sign In',
                         onPressed: () {},
                       ),
                     ),
@@ -89,15 +89,23 @@ class SignUpScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Already have an account?',
-                          style: TextStyle(
+                         Text(
+                          'Dont have an account?',
+                          style: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
                             color: AppTheme.whiteColor,
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
-                            // Your button's action here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignInScreen(),
+                              ),
+                            );
                           },
                           child: Ink(
                             decoration: const BoxDecoration(
@@ -111,7 +119,7 @@ class SignUpScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(
                                   8.0), // Add padding as needed
                               child: const Text(
-                                'Sign In',
+                                'Sign Up',
                                 style: TextStyle(
                                   color: AppTheme.primaryColor, // Text color
                                   fontSize: 18.0, // Text size
