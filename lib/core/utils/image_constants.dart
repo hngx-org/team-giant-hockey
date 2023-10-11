@@ -10,4 +10,5 @@ class ImageConstant {
   static const String greenPuck = "assets/images/puck_green.png";
   static const String hockeyPitch = "assets/images/hockey_pitch.png";
   static const String game_pad = "assets/images/game_pad.png";
+  static const String background = "assets/images/ellipse.png";
 }

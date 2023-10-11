@@ -1,36 +1,43 @@
-// signin_screen.dart
-import '../../controller/sign_in_controller.dart';
 import '../../core/app_export.dart';
-// Import necessary packages and files
 
-class SignInScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  SignInScreen({super.key});
+  SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(30),
-              height: 300,
+      appBar: AppBar(
+        backgroundColor: AppTheme.primaryColor,
+        title: Text(
+          'Sign In To Play',
+          style: GoogleFonts.abhayaLibre(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            color: AppTheme.whiteColor,
+          ),
+        ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(30),
+            height: 300,
+            width: double.infinity,
+            color: AppTheme.primaryColor,
+            child: SizedBox(
+              height: 227,
               width: double.infinity,
-              color: AppTheme.primaryColor,
-              child: SizedBox(
-                height: 257,
-                width: double.infinity,
-                child: Image.asset(
-                  ImageConstant.game_pad,
-                ),
+              child: Image.asset(
+                ImageConstant.game_pad,
               ),
             ),
-            Expanded(
+          ),
+          Expanded(
             child: Container(
               color: Colors.black, // Set the background color to black
               child: SingleChildScrollView(
@@ -41,7 +48,15 @@ class SignInScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: emailController,
-                        decoration: const InputDecoration(labelText: 'Email'),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                       ),
                     ),
                     // Password Field
@@ -49,7 +64,15 @@ class SignInScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       child: TextFormField(
                         controller: passwordController,
-                        decoration: const InputDecoration(labelText: 'Password'),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: GoogleFonts.abhayaLibre(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
                         obscureText: true,
                       ),
                     ),
@@ -64,9 +87,39 @@ class SignInScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?'),
-                        Text('Sign In'),
+                        const Text(
+                          'Already have an account?',
+                          style: TextStyle(
+                            color: AppTheme.whiteColor,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Your button's action here
+                          },
+                          child: Ink(
+                            decoration: const BoxDecoration(
+                              color: AppTheme.primaryColor,
+                            ),
+                            child: Container(
+                              // constraints: const BoxConstraints(
+                              //   maxWidth: 200.0, // Set a maximum width
+                              // ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(
+                                  8.0), // Add padding as needed
+                              child: const Text(
+                                'Sign In',
+                                style: TextStyle(
+                                  color: AppTheme.primaryColor, // Text color
+                                  fontSize: 18.0, // Text size
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -74,8 +127,7 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
           ),
-          ],
-        ),
+        ],
       ),
     );
   }
