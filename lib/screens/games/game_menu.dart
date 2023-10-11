@@ -1,4 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:team_giant_hockey/controller/menu_controller.dart';
+import 'package:team_giant_hockey/core/utils/image_constants.dart';
+import 'package:team_giant_hockey/main.dart';
+import 'package:team_giant_hockey/screens/games/game_screen.dart';
+import 'package:team_giant_hockey/screens/settings/game_rule.dart';
+import 'package:team_giant_hockey/screens/settings/leaderboard.dart';
+import 'package:team_giant_hockey/screens/settings/player_mode.dart';
+import 'package:team_giant_hockey/screens/settings/settings.dart';
+import 'package:team_giant_hockey/themes/app_theme.dart';
+import 'package:team_giant_hockey/widgets/custom_text.dart';
+import 'package:team_giant_hockey/widgets/size_config.dart';
+import 'package:flutter/services.dart';
 
 class GameMenuScreen extends StatefulWidget {
   const GameMenuScreen({super.key});
@@ -9,7 +23,101 @@ class GameMenuScreen extends StatefulWidget {
 
 class _GameMenuScreenState extends State<GameMenuScreen> {
   @override
+  void initState() {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    SizeConfig.init(context);
+    final _menuController = Get.put(GameMenuController());
+    
+    return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      backgroundColor: AppTheme.appBackgroundColor,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                Image.asset(
+                  ImageConstant.gameAirString,
+                  scale: 4,
+                ),
+                Image.asset(
+                  ImageConstant.gameHockeyString,
+                  scale: 4,
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Image.asset(
+                ImageConstant.yellowPuck,
+                scale: 4,
+              ),
+            ),
+            Column(
+              children: [
+                ...List.generate(
+                  _menuController.menus.length,
+                  (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        if (index == 0) {
+                          Get.to(GameScreen());
+                        } else if (index == 1) {
+                          Get.to(GameRulesScreen());
+                        } else if (index == 2) {
+                          Get.to(LeaderBoardScreen());
+                        } else if (index == 3) {
+                          Get.to(PlayerModeScreen());
+                        } else if (index == 4) {
+                          SystemNavigator.pop();
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: customCentreText(
+                          inputText: _menuController.menus[index],
+                          fontSize: 32,
+                          weight: FontWeight.w700,
+                          colorName: AppTheme.whiteColor,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  ImageConstant.greenPuck,
+                  scale: 4,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(SettingsScreen());
+                  },
+                  child: const Icon(
+                    Icons.settings,
+                    color: AppTheme.whiteColor,
+                    size: 60,
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
