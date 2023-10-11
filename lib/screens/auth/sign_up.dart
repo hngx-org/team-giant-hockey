@@ -1,15 +1,50 @@
+// signup_screen.dart
+import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
+// Import necessary packages and files
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
+  SignUpScreen({super.key});
 
-class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            // Full Name Field
+            TextFormField(
+              controller: fullNameController,
+              decoration: InputDecoration(labelText: 'Full Name'),
+            ),
+            // Email Field
+            TextFormField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            // Password Field
+            TextFormField(
+              controller: passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            // Sign-up button that calls AuthController's signUp method
+            ElevatedButton(
+              onPressed: () {
+                // final fullName = fullNameController.text;
+                // final email = emailController.text;
+                // final password = passwordController.text;
+                // Get.find<AuthController>().signUp(fullName, email, password);
+              },
+              child: Text('Sign Up'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
