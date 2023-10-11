@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "683953220299",
+    "project_id": "hockey-game-80aae",
+    "storage_bucket": "hockey-game-80aae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683953220299:android:3e66e6d2450fdddc8d894e",
+        "android_client_info": {
+          "package_name": "com.example.team_giant_hockey"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCq1R7Rj6eAHsZQYx9E6G0XOOm5HHkpv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
