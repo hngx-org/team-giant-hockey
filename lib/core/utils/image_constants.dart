@@ -1,5 +1,5 @@
 class ImageSvgConstant {
-  static const String game_pad = "assets/svg_images/game_pad.svg";
+  static const String game_pad = "assets/svg_images/game_pad.png";
   static const String crown = "assets/svg_images/crown.svg";
 }
 
@@ -9,4 +9,5 @@ class ImageConstant {
   static const String yellowPuck = "assets/images/puck_yellow.png";
   static const String greenPuck = "assets/images/puck_green.png";
   static const String hockeyPitch = "assets/images/hockey_pitch.png";
+  static const String game_pad = "assets/images/game_pad.png";
 }
