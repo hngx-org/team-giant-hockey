@@ -24,6 +24,7 @@ class SignUpFormWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: TextFormField(
+                    style: TextStyle(color: AppTheme.whiteColor),
                     controller: controller.fullName,
                     decoration: InputDecoration(
                       labelText: 'Full Name',
@@ -40,6 +41,7 @@ class SignUpFormWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: TextFormField(
+                    style: TextStyle(color: AppTheme.whiteColor),
                     controller: controller.email,
                     decoration: InputDecoration(
                       labelText: 'Email',
@@ -56,6 +58,7 @@ class SignUpFormWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: TextFormField(
+                    style: TextStyle(color: AppTheme.whiteColor),
                     controller: controller.password,
                     decoration: InputDecoration(
                       labelText: 'Password',

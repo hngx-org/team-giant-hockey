@@ -1,5 +1,7 @@
 import 'package:team_giant_hockey/core/app_export.dart';
 
+import '../services/repository/authentication_repository/authentication_repository.dart';
+
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find(); 
 
@@ -7,11 +9,12 @@ class SignUpController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   final fullName = TextEditingController();
-  final phoneNo = TextEditingController();
 
   // Call the Function from Design & it will do the rest
     void registerUser(String email, String password) {
-      
+      AuthenticationRepository.instance.createUserWithEmailandPassword(email, password);
     }
+
+
 
 }

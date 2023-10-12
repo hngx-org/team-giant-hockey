@@ -1,25 +1,19 @@
-// // import 'package:flutter/material.dart';
-// // auth_controller.dart
-// import 'package:get/get.dart';
-// import '../../core/app_export.dart';
 
-// class AuthController extends GetxController {
-//   // Implement authentication methods using Firebase here
+import 'package:team_giant_hockey/core/app_export.dart';
 
-//   Future<void> signUp(String fullName, String email, String password) async {
-//   try {
-//     final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-//       email: email,
-//       password: password,
-//     );
+import '../services/repository/authentication_repository/authentication_repository.dart';
 
-//     // Update the user's display name with the full name
-//     await userCredential.user!.updateDisplayName(fullName);
+class SignInController extends GetxController {
+  static SignInController get instance => Get.find(); 
 
-//     // Handle successful sign-up (e.g., navigate to the home screen)
-//   } catch (e) {
-//     // Handle sign-up error
-//   }
-// }
+  // TextField Controllers to get data from TextFields
+  final email = TextEditingController();
+  final password = TextEditingController();
 
-// }
+  // Call the Function from Design & it will do the rest
+    void loginUser(String email, String password) {
+      AuthenticationRepository.instance.loginUserWithEmailandPassword(email, password);
+    }
+
+  
+}
