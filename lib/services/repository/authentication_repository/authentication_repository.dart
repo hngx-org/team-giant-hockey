@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:team_giant_hockey/core/app_export.dart';
 
 import '../../../screens/auth/sign_in.dart';

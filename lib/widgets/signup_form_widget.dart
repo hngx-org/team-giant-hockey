@@ -26,6 +26,7 @@ class SignUpFormWidget extends StatelessWidget {
                   child: TextFormField(
                     style: TextStyle(color: AppTheme.whiteColor),
                     controller: controller.fullName,
+                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Full Name',
                       labelStyle: GoogleFonts.abhayaLibre(
