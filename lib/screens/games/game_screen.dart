@@ -1,11 +1,14 @@
+import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:team_giant_hockey/core/base_game.dart';
 import 'package:team_giant_hockey/core/utils/image_constants.dart';
 import 'package:team_giant_hockey/widgets/custom_text.dart';
 import 'package:team_giant_hockey/widgets/dialog_widget.dart';
 
 import '../../themes/app_theme.dart';
 
-class GameScreen extends StatefulWidget {
+class GameScreen extends StatefulWidget{
   const GameScreen({super.key});
 
   @override
@@ -20,14 +23,15 @@ class _GameScreenState extends State<GameScreen> {
       // resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(
-              ImageConstant.hockeyPitch,
-              fit: BoxFit.fill,
-            ),
-          ),
+          // SizedBox(
+          //   width: MediaQuery.of(context).size.width,
+          //   height: MediaQuery.of(context).size.height,
+          //   child: Image.asset(
+          //     ImageConstant.hockeyPitch,
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
+          GameWidget.controlled(gameFactory: MyGame.new),
           Align(
             alignment: Alignment.centerRight,
             child: Column(

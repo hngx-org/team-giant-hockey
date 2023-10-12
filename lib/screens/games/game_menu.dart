@@ -1,9 +1,11 @@
+import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/controller/menu_controller.dart';
+import 'package:team_giant_hockey/core/base_game.dart';
 import 'package:team_giant_hockey/core/utils/image_constants.dart';
-import 'package:team_giant_hockey/main.dart';
 import 'package:team_giant_hockey/screens/games/game_screen.dart';
 import 'package:team_giant_hockey/screens/settings/game_rule.dart';
 import 'package:team_giant_hockey/screens/settings/leaderboard.dart';
@@ -12,7 +14,6 @@ import 'package:team_giant_hockey/screens/settings/settings.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
 import 'package:team_giant_hockey/widgets/custom_text.dart';
 import 'package:team_giant_hockey/widgets/size_config.dart';
-import 'package:flutter/services.dart';
 
 class GameMenuScreen extends StatefulWidget {
   const GameMenuScreen({super.key});
@@ -27,11 +28,12 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     final _menuController = Get.put(GameMenuController());
-    
+
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: AppTheme.appBackgroundColor,
@@ -72,6 +74,7 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                       onTap: () {
                         if (index == 0) {
                           Get.to(GameScreen());
+                          // Get.to(GameWidget(game: MyGame()) );
                         } else if (index == 1) {
                           Get.to(GameRulesScreen());
                         } else if (index == 2) {
@@ -83,7 +86,7 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 10),
                         child: customCentreText(
                           inputText: _menuController.menus[index],
                           fontSize: 32,
