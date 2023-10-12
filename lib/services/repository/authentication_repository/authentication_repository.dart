@@ -48,12 +48,13 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      // Get.snackbar(
-      //   'Error creating account',
-      //   e.toString(),
-      //   snackPosition: SnackPosition.BOTTOM,
-      // );
-    } catch (_) {}
+      final ex = SignWithEmailAndPasswordFailure.code(e.code);
+      print('FIREBASE AUTH EXCEPTION - ${ex.message}');
+      throw ex;
+    } catch (_) {
+      const ex = SignWithEmailAndPasswordFailure();
+      print('EXCEPTION - ${ex.message}');
+    }
   }
 
   Future<void> logout() async => await _auth.signOut();

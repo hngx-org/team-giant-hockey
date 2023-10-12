@@ -26,7 +26,7 @@ AppTheme appTheme = AppTheme();
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   runApp(GameWidget(game: MyGame()));
   runApp(
@@ -35,15 +35,6 @@ void main() async {
       builder: (context) => const MyApp(),
     ),
   );
-
-  // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
-  // runApp(
-  //   DevicePreview(
-  //     enabled: false,
-  //     builder: (context) => const MyApp(),
-  //   ),
-  // );
-
 }
 
 class MyApp extends StatelessWidget {
