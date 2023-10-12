@@ -4,8 +4,12 @@ import 'package:get/get.dart';
 import 'package:team_giant_hockey/core/utils/image_constants.dart';
 import 'package:team_giant_hockey/widgets/size_config.dart';
 
+import '../../core/app_export.dart';
+import '../../services/repository/authentication_repository/authentication_repository.dart';
 import '../../themes/app_theme.dart';
 import '../../widgets/custom_text.dart';
+
+import '../auth/sign_in.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,6 +19,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  // final AuthenticationRepository _authRepository = AuthenticationRepository();
   bool val = true;
   bool mus = true;
   int puckNumber = 0;
@@ -146,7 +151,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                )
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // log out
+                    if  (Get.isDialogOpen == false) {
+                      Get.defaultDialog(
+                        title: 'Log Out',
+                        titleStyle: GoogleFonts.abhayaLibre(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          color: AppTheme.whiteColor,
+                        ),
+                        content: customCentreText(
+                            inputText: 'Are you sure you want to log out?',
+                            fontSize: 24,
+                            weight: FontWeight.w700,
+                            colorName: AppTheme.whiteColor),
+                        textConfirm: 'Yes',
+                        textCancel: 'No',
+                        confirmTextColor: AppTheme.whiteColor,
+                        cancelTextColor: AppTheme.whiteColor,
+                        buttonColor: AppTheme.redColor,
+                        onConfirm: () async {
+                        //  await _authRepository.logout();
+                        },
+                        onCancel: () {
+                          Get.back();
+                        },
+                      );
+                    }
+                  },
+                  child: Ink(
+                    child: Container(
+                      child: customCentreText(
+                          inputText: 'Log Out',
+                          colorName: AppTheme.redColor,
+                          fontSize: 26,
+                          weight: FontWeight.w700),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
