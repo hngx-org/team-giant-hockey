@@ -175,7 +175,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         cancelTextColor: AppTheme.whiteColor,
                         buttonColor: AppTheme.redColor,
                         onConfirm: () async {
-                         await _authRepository.logout().;
+                         await _authRepository.logout();
                         },
                         onCancel: () {
                           Get.back();

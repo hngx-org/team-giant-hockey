@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
 
 
@@ -28,20 +29,20 @@ void main() async {
 
   FlameAudio.bgm.initialize();
   runApp(GameWidget(game: MyGame()));
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => const MyApp(),
+    ),
+  );
+
+  // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
   // runApp(
   //   DevicePreview(
   //     enabled: false,
   //     builder: (context) => const MyApp(),
   //   ),
   // );
-
-//   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
-//   runApp(
-//     DevicePreview(
-//       enabled: false,
-//       builder: (context) => const MyApp(),
-//     ),
-//   );
 
 }
 
@@ -58,7 +59,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: GameMenuScreen(),
+      home: SignUpScreen()
+      
+      // GameMenuScreen(),
     );
   }
 }
