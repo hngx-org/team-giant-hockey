@@ -1,3 +1,4 @@
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/core/utils/image_constants.dart';
@@ -35,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () {
               Get.back();
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_left_rounded,
               size: 60,
               color: AppTheme.whiteColor,
@@ -90,7 +91,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       switcher: mus,
                       onTap: () {
                         setState(() {
-                          mus = !mus;
+                          FlameAudio.bgm.stop();
+                          // FlameAudio.bgm.pause();
+                          // if (mus == true) {
+                          //   print(mus);
+                          //   mus = false;
+                          //   FlameAudio.bgm.stop();
+                          // } else if (mus == false) {
+                          //   print("here $mus");
+                          //   mus = true;
+                          //   FlameAudio.bgm.play('background_music1.mp3');
+                          // }
                         });
                       },
                     ),
@@ -210,18 +221,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             Container(
               width: getProportionateScreenWidth(84.5),
-              height: getProportionateScreenWidth(26),
+              height: getProportionateScreenWidth(30),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: switcher
                       ? AppTheme.whiteColor
                       : AppTheme.inActiveSwitchColor),
-              child: Center(
-                  child: customCentreText(
-                      inputText: 'OFF',
-                      fontSize: 20,
-                      weight: FontWeight.w700,
-                      colorName: AppTheme.whiteColor)),
+              child: customCentreText(
+                  inputText: 'OFF',
+                  fontSize: 16,
+                  weight: FontWeight.w700,
+                  colorName: AppTheme.whiteColor),
             ),
             Container(
               width: getProportionateScreenWidth(84.5),
@@ -233,7 +243,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Center(
                   child: customCentreText(
                       inputText: 'ON',
-                      fontSize: 20,
+                      fontSize: 16,
                       weight: FontWeight.w700,
                       colorName: AppTheme.whiteColor)),
             ),
