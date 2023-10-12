@@ -157,6 +157,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     // log out
                     if (Get.isDialogOpen == false) {
                       Get.defaultDialog(
+                        backgroundColor: AppTheme.appBackgroundColor,
                         title: 'Log Out',
                         titleStyle: GoogleFonts.abhayaLibre(
                           fontSize: 32,
@@ -171,9 +172,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             colorName: AppTheme.whiteColor),
                         textConfirm: 'Yes',
                         textCancel: 'No',
-                        confirmTextColor: AppTheme.whiteColor,
+                        confirmTextColor: AppTheme.primaryColor,
                         cancelTextColor: AppTheme.whiteColor,
-                        buttonColor: AppTheme.redColor,
+                        buttonColor: AppTheme.whiteColor,
                         onConfirm: () async {
                           AuthenticationRepository.instance.logout();
                         },
@@ -187,7 +188,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Container(
                       child: customCentreText(
                           inputText: 'Log Out',
-                          colorName: AppTheme.redColor,
+                          colorName: AppTheme.primaryColor,
                           fontSize: 26,
                           weight: FontWeight.w700),
                     ),
