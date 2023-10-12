@@ -20,6 +20,7 @@ import 'core/base_game.dart';
 import 'firebase_options.dart';
 
 import 'screens/auth/sign_up.dart';
+import 'screens/games/game_menu.dart';
 import 'services/repository/authentication_repository/authentication_repository.dart';
 
 AppTheme appTheme = AppTheme();

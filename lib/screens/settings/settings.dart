@@ -19,9 +19,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final AuthenticationRepository _authRepository = AuthenticationRepository();
+  // final AuthenticationRepository _authRepository = AuthenticationRepository();
   bool val = true;
-  bool mus = false;
+  bool mus = true;
   int puckNumber = 0;
   @override
   Widget build(BuildContext context) {
@@ -91,17 +91,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       switcher: mus,
                       onTap: () {
                         setState(() {
-                          FlameAudio.bgm.stop();
+                          // FlameAudio.bgm.play(fileName);
                           // FlameAudio.bgm.pause();
-                          // if (mus == true) {
-                          //   print(mus);
-                          //   mus = false;
-                          //   FlameAudio.bgm.stop();
-                          // } else if (mus == false) {
-                          //   print("here $mus");
-                          //   mus = true;
-                          //   FlameAudio.bgm.play('background_music1.mp3');
-                          // }
+                          if (mus == true) {
+                            print(mus);
+                            mus = false;
+                            FlameAudio.bgm.pause();
+                          } else if (mus == false) {
+                            print("here $mus");
+                            mus = true;
+                            FlameAudio.bgm.play('background_music1.mp3');
+                          }
                         });
                       },
                     ),
@@ -175,7 +175,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         cancelTextColor: AppTheme.whiteColor,
                         buttonColor: AppTheme.redColor,
                         onConfirm: () async {
+
                           AuthenticationRepository.instance.logout();
+
                         },
                         onCancel: () {
                           Get.back();

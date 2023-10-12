@@ -8,14 +8,18 @@ import 'package:team_giant_hockey/widgets/dialog_widget.dart';
 
 import '../../themes/app_theme.dart';
 
-class GameScreen extends StatefulWidget{
-  const GameScreen({super.key});
+class GameScreen extends StatelessWidget {
+  GameScreen({
+    super.key,
+  });
 
-  @override
-  State<GameScreen> createState() => _GameScreenState();
-}
+  final MyGame gameRef = MyGame();
 
-class _GameScreenState extends State<GameScreen> {
+//   @override
+//   State<GameScreen> createState() => _GameScreenState();
+// }
+
+// class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +34,17 @@ class _GameScreenState extends State<GameScreen> {
           //     ImageConstant.hockeyPitch,
           //     fit: BoxFit.fill,
           //   ),
-          // ),
-          GameWidget.controlled(gameFactory: MyGame.new),
+
+          GameWidget.controlled(
+            gameFactory: MyGame.new,
+            // overlayBuilderMap: {
+            //   'PauseMenu': (context, game) {
+            //     return showMyDialog(context, () => null);
+            //   }
+            // },
+            // initialActiveOverlays: const ['PauseMenu'],
+          ),
+
           Align(
             alignment: Alignment.centerRight,
             child: Column(
@@ -48,7 +61,17 @@ class _GameScreenState extends State<GameScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    showMyDialog(context, () {});
+                    gameRef.pauseEngine();
+                    showMyDialog(
+                      context,
+                      () {
+                        // @override
+                        //  gameRef.refreshWidget();
+                      },
+                      () {
+                        gameRef.resumeEngine();
+                      },
+                    );
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),

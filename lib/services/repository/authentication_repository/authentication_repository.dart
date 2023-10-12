@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:team_giant_hockey/core/app_export.dart';
 
@@ -59,3 +60,4 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> logout() async => await _auth.signOut();
 }
+
