@@ -14,6 +14,5 @@ class SignInController extends GetxController {
     void loginUser(String email, String password) {
       AuthenticationRepository.instance.loginUserWithEmailandPassword(email, password);
     }
-
-  
+ 
 }

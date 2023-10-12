@@ -1,3 +1,5 @@
+import 'package:team_giant_hockey/widgets/size_config.dart';
+
 import '../../controller/sign_up_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/signup_form_widget.dart';
@@ -12,33 +14,44 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    SizeConfig.init(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppTheme.primaryColor,
-        title: Text(
-          'Sign Up To Play',
-          style: GoogleFonts.abhayaLibre(
-            fontSize: 32,
-            fontWeight: FontWeight.w700,
-            fontStyle: FontStyle.normal,
-            color: AppTheme.whiteColor,
-          ),
-        ),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(30),
-            height: 300,
+            padding:  EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            height: getProportionateScreenHeight(314),
             width: double.infinity,
             color: AppTheme.primaryColor,
             child: SizedBox(
               height: 227,
               width: double.infinity,
-              child: Image.asset(
-                ImageConstant.game_pad,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: getProportionateScreenHeight(35),
+                  ),
+                  Text(
+                    'Sign Up\nTo Play',
+                    style: GoogleFonts.abhayaLibre(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.normal,
+                      color: AppTheme.whiteColor,
+                    ),
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: getProportionateScreenHeight(169),
+                      width: getProportionateScreenWidth(257),
+                      child: Image.asset(
+                        ImageConstant.game_pad,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -48,4 +61,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-

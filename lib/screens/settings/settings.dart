@@ -155,7 +155,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 GestureDetector(
                   onTap: () {
                     // log out
-                    if  (Get.isDialogOpen == false) {
+                    if (Get.isDialogOpen == false) {
                       Get.defaultDialog(
                         title: 'Log Out',
                         titleStyle: GoogleFonts.abhayaLibre(
@@ -175,7 +175,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         cancelTextColor: AppTheme.whiteColor,
                         buttonColor: AppTheme.redColor,
                         onConfirm: () async {
-                        //  await _authRepository.logout();
+
+                          AuthenticationRepository.instance.logout();
+
                         },
                         onCancel: () {
                           Get.back();
