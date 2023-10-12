@@ -10,9 +10,15 @@ class SignInController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
 
-  // Call the Function from Design & it will do the rest
-    void loginUser(String email, String password) {
-      AuthenticationRepository.instance.loginUserWithEmailandPassword(email, password);
-    }
- 
+  // Add an `isLoading` variable
+  var isLoading = false.obs; // Use GetX observable
+
+  void loginUser(String email, String password) {
+    isLoading(true); // Set isLoading to true when the sign-in process starts
+    AuthenticationRepository.instance.loginUserWithEmailandPassword(email, password)
+        .then((_) {
+      // Set isLoading to false when the sign-in process is complete
+      isLoading(false);
+    });
+  }
 }
