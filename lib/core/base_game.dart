@@ -8,9 +8,11 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:dashbook/dashbook.dart';
 import 'package:team_giant_hockey/core/components/puck_component.dart';
 import 'package:team_giant_hockey/core/settings_game.dart';
 
+import '../widgets/dialog_widget.dart';
 import 'components/paddle1_component.dart';
 import 'components/paddle2_component.dart';
 
@@ -36,7 +38,7 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     puck
       ..sprite = await loadSprite('game_puck.png')
       ..size = Vector2(40, 40)
-      ..y = screenHeight / 2
+      ..y = screenHeight - 200
       ..x = screenWidth / 2;
     // puck =velocity
     add(puck);
@@ -44,13 +46,13 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
       ..sprite = await loadSprite('puck_green.png')
       ..size = Vector2(60, 60)
       ..y = 80
-      ..x = screenWidth / 2;
+      ..x = screenWidth / 2 - 30;
     add(paddle1);
     paddle2
       ..sprite = await loadSprite('puck_yellow.png')
       ..size = Vector2(60, 60)
-      ..y = screenHeight - 80
-      ..x = screenWidth / 2;
+      ..y = screenHeight - 140
+      ..x = screenWidth / 2 - 30;
     add(paddle2);
 
     add(ScreenHitbox());
@@ -66,4 +68,50 @@ class MyGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
     // position.add(velocity * dt);
   }
+
+  // @override
+  // void onTap() {
+  //   // Future.delayed(Duration.zero, () {
+  //   if (overlays.isActive('PauseMenu')) {
+  //     overlays.remove('PauseMenu');
+  //     print("resume");
+  //     resumeEngine();
+  //   } else {
+  //     overlays.add('PauseMenu');
+  //     print("pause");
+  //     pauseEngine();
+  //   }
+  //   // });
+  // }
 }
+
+  //  void pauseGame() {
+  //   Future.delayed(Duration.zero, () {
+  //     isPaused = true;
+  //     // You can put any other code that should run when the game is paused here
+  //   });
+  // }
+
+  // void resumeGame() {
+  //   Future.delayed(Duration.zero, () {
+  //     isPaused = false;
+  //     // You can put any other code that should run when the game is resumed here
+  //   });
+  // }
+
+// Widget _pauseMenuBuilder(BuildContext buildContext, MyGame game) {
+//   return showMyDialog(buildContext, () {});
+// }
+
+// Widget overlayBuilder() {
+//   return GameWidget.controlled(
+//     gameFactory: MyGame.new,
+//     overlayBuilderMap: {
+//       'PauseMenu': (context, game) {
+//         return 
+//         showMyDialog(context, () => null);
+//       }
+//     },
+//     initialActiveOverlays: const ['PauseMenu'],
+//   );
+// }

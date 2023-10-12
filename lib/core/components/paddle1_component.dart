@@ -7,20 +7,10 @@ import 'package:team_giant_hockey/core/components/puck_component.dart';
 
 class Paddle1DraggableComponent extends SpriteComponent
     with DragCallbacks, HasGameRef<MyGame>, CollisionCallbacks {
-  // update and render omitted
-
-  // Vector2? dragDeltaPosition;
-  // bool get isDragging => dragDeltaPosition != null;
-
-  // Paddle1DraggableComponent({super.position}) : super(size: Vector2.all(100));
 
   @override
   Future<void> onLoad() async {
-   
-     print("P here");
- 
 
-    print("P here");
     add(CircleHitbox(isSolid: true));
   }
 
@@ -37,38 +27,52 @@ class Paddle1DraggableComponent extends SpriteComponent
       event.continuePropagation = true;
       return;
     }
-
-    position.add(event.delta);
-    event.continuePropagation = false;
-  }
-
-  @override
-  void onCollisionStart(
-    Set<Vector2> intersectionPoints,
-    PositionComponent other,
-  ) {
-    super.onCollisionStart(intersectionPoints, other);
-    print("Collision started");
-    if (other is PuckComponent) {
-      // removeFromParent();
-      print("Collision started");
-      return;
+if (position.x >= 0 && position.x <= 350 && position.y >= 0 && position.y <= 300) {
+      position.add(event.delta);
+      event.continuePropagation = false;
+    } else {
+      if (position.x < 0){
+        position.add(Vector2(0.5, 0));
+      } 
+      if (position.x > 350)  {
+        position.add(Vector2(-0.5, 0));
+      }
+      if (position.y < 0){
+        position.add(Vector2(0, 0.5));
+      } 
+      if (position.y > 300)  {
+        position.add(Vector2(0, -0.5));
+      }
+      
     }
   }
 
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    super.onCollisionEnd(other);
-    print("Collision ended");
-    if (!isColliding) {
-      print("Collision ended");
-    }
-  }
+  // @override
+  // void onCollisionStart(
+  //   Set<Vector2> intersectionPoints,
+  //   PositionComponent other,
+  // ) {
+  //   super.onCollisionStart(intersectionPoints, other);
+   
+  //   if (other is PuckComponent) {
+  //     return;
+  //   }
+  // }
+
+  // @override
+  // void onCollisionEnd(PositionComponent other) {
+  //   super.onCollisionEnd(other);
+  //   if (!isColliding) {
+  //     print("Collision ended");
+  //   }
+  // }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    if (other == PuckComponent()) print("collided ------");
+    if (other == ScreenHitbox()){
+
+    }
   }
 
   // @override

@@ -7,19 +7,9 @@ import 'package:team_giant_hockey/core/components/puck_component.dart';
 
 class Paddle2DraggableComponent extends SpriteComponent
     with DragCallbacks, HasGameRef<MyGame>, CollisionCallbacks {
-  // update and render omitted
-
-  // Vector2? dragDeltaPosition;
-  // bool get isDragging => dragDeltaPosition != null;
-
-  // Paddle1DraggableComponent({super.position}) : super(size: Vector2.all(100));
-  
-  
-  Future<void> onload() async {
-    await super.onLoad();
-    
-    add(CircleHitbox());
-    // add(MyCollidable(size));
+  @override
+  Future<void> onLoad() async {
+    add(CircleHitbox(isSolid: true));
   }
 
   @override
@@ -31,41 +21,68 @@ class Paddle2DraggableComponent extends SpriteComponent
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
+    print("position ${position.y}");
     if (findGame() is! MyGame) {
       event.continuePropagation = true;
       return;
     }
-
-    position.add(event.delta);
-    event.continuePropagation = false;
-  }
-
-  @override
-  void onCollisionStart(
-    Set<Vector2> intersectionPoints,
-    PositionComponent other,
-  ) {
-    super.onCollisionStart(intersectionPoints, other);
-    print("Collision started");
-    if (other is PuckComponent) {
-      // removeFromParent();
-      print("Collision started");
-      return;
+    if (position.x >= 0 && position.x <= 350 && position.y >= 350 && position.y <= 668) {
+      position.add(event.delta);
+      event.continuePropagation = false;
+    } else {
+      if (position.x < 0){
+        position.add(Vector2(0.5, 0));
+      } 
+      if (position.x > 350)  {
+        position.add(Vector2(-0.5, 0));
+      }
+      if (position.y < 350){
+        position.add(Vector2(0, 0.5));
+      } 
+      if (position.y > 668)  {
+        position.add(Vector2(0, -0.5));
+      }
+      
     }
+    // if (position.y >= 350 && position.y <= 710) {
+    //   position.add(Vector2(0, event.delta.y));
+    //   event.continuePropagation = false;
+    // } else {
+    //   if (position.y < 350){
+    //     position.add(Vector2(0.5, 0));
+    //   } 
+    //   if (position.y > 710)  {
+    //     position.add(Vector2(-0.5, 0));
+    //   }
+      
+    // }
   }
 
-  @override
-  void onCollisionEnd(PositionComponent other) {
-    super.onCollisionEnd(other);
-    print("Collision ended");
-    if (!isColliding) {
-      print("Collision ended");
-    }
-  }
+  // @override
+  // void onCollisionStart(
+  //   Set<Vector2> intersectionPoints,
+  //   PositionComponent other,
+  // ) {
+  //   super.onCollisionStart(intersectionPoints, other);
+  //   print("Collision started");
+  //   if (other is PuckComponent) {
+  //     // removeFromParent();
+  //     print("Collision started");
+  //     return;
+  //   }
+  // }
+
+  // @override
+  // void onCollisionEnd(PositionComponent other) {
+  //   super.onCollisionEnd(other);
+  //   if (!isColliding) {
+  //     print("Collision ended");
+  //   }
+  // }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    if (other == PuckComponent()) print("collided ------");
+    if (other == ScreenHitbox()) {}
   }
 }

@@ -18,13 +18,13 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   FlameAudio.bgm.initialize();
-  runApp(GameWidget(game: MyGame()));
-  // runApp(
-  //   DevicePreview(
-  //     enabled: false,
-  //     builder: (context) => const MyApp(),
-  //   ),
-  // );
+  // runApp(GameWidget(game: MyGame()));
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
