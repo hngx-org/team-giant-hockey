@@ -8,29 +8,106 @@ import 'package:team_giant_hockey/core/base_game.dart';
 import 'paddle1_component.dart';
 
 class PuckComponent extends SpriteComponent
-    with HasGameRef<MyGame>, DragCallbacks, CollisionCallbacks {
-  Future<void> onload() async {
-    await super.onLoad();
-    final screenWidth = size[0];
-    final screenHeight = size[1];
+    with HasGameRef<MyGame>, CollisionCallbacks {
+  Vector2 velocity = Vector2.zero();
+  @override
+  Future<void> onLoad() async {
+    print("here here");
+    // velocity = (center - position)..scaleTo(150);
 
-    sprite = await gameRef.loadSprite('game_puck.png');
-    size = Vector2(40, 40)
-      ..y = screenHeight / 2
-      ..x = screenWidth / 2;
-
-    // add(CircleHitbox());
-    // add(MyCollidable(size));
+    print("here");
+    add(CircleHitbox(isSolid: true));
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
+
     // add(MyCollidable(intersectionPoints.first));
+    // print("collided ------");
     if (other is Paddle1DraggableComponent) {
-      removeFromParent();
+      final collisionPoint = intersectionPoints.first;
+      velocity.y = collisionPoint.y;
+      if (collisionPoint.toRect().overlaps(toRect())) {
+        // Reverse the Y velocity to bounce off the paddle.
+        //  velocity.y = -velocity.y;
+
+        // Optionally, adjust the ball's horizontal velocity based on its position relative to the paddle's center.
+        // Calculate the position difference between the ball and the center of the paddle.
+        double relativePosition = position.x - collisionPoint.x;
+        // Scale the X velocity based on the relative position.
+
+// Scale the X velocity based on the relative position.
+        velocity.x = relativePosition * 5;
+      }
+      // velocity.x = collisionPoint.x;
+      // velocity.negate();
+      // movePuck();
       print("collided ------");
+    } else if (other is ScreenHitbox) {
+      final collisionPoint = intersectionPoints.first;
+      // Left Side Collision
+      if (collisionPoint.x == 0) {
+        velocity.x = -velocity.x;
+        velocity.y = velocity.y;
+      }
+      // Right Side Collision
+      if (collisionPoint.x == game.size.x) {
+        velocity.x = -velocity.x;
+        velocity.y = velocity.y;
+      }
+      // Top Side Collision
+      if (collisionPoint.y == 0) {
+        velocity.x = velocity.x;
+        velocity.y = -velocity.y;
+      }
+      // Bottom Side Collision
+      if (collisionPoint.y == game.size.y) {
+        velocity.x = velocity.x;
+        velocity.y = -velocity.y;
+      }
+      //  FlameAudio.play('wall-hit.wav');
     }
+    // if (other is ScreenHitbox) {
+    //   velocity.negate();
+    // }
+  }
+
+  // void movePuck() {
+  //   velocity = Vector2(20, -40);
+  // }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+    // print("collided here here ------");
+    // if () {
+    if (position.x == gameRef.size.x || position.x == 0) {
+      velocity.x = -velocity.x;
+
+    }
+    if (position.y == gameRef.size.y || position.y == 0) {
+      velocity.y = -velocity.y;
+    }
+    position += velocity * dt;
+    // Check for collisions with the screen boundaries.
+    // if (position.x <= 0 ||
+    //     position.x >=
+    //         MediaQueryData.fromView(
+    //                 WidgetsBinding.instance.renderView.flutterView)
+    //             .size
+    //             .width) {
+    //   // Reverse the X velocity to bounce off the sides.
+    //   velocity.x = -velocity.x;
+    // }
+    // if (position.y <= 0) {
+    //   // Reverse the Y velocity to bounce off the top.
+    //   velocity.y = -velocity.y;
+    // }
+    // print("collided here ------");
+    // }
+    // position.add(velocity * dt);
   }
 }
 
@@ -88,3 +165,5 @@ class MyCollidable extends PositionComponent
     }
   }
 }
+
+

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:team_giant_hockey/core/base_game.dart';
 import 'package:team_giant_hockey/core/components/puck_component.dart';
 
-class Paddle1DraggableComponent extends SpriteComponent
+class Paddle2DraggableComponent extends SpriteComponent
     with DragCallbacks, HasGameRef<MyGame>, CollisionCallbacks {
   // update and render omitted
 
@@ -13,15 +13,13 @@ class Paddle1DraggableComponent extends SpriteComponent
   // bool get isDragging => dragDeltaPosition != null;
 
   // Paddle1DraggableComponent({super.position}) : super(size: Vector2.all(100));
-
-  @override
-  Future<void> onLoad() async {
-   
-     print("P here");
- 
-
-    print("P here");
-    add(CircleHitbox(isSolid: true));
+  
+  
+  Future<void> onload() async {
+    await super.onLoad();
+    
+    add(CircleHitbox());
+    // add(MyCollidable(size));
   }
 
   @override
@@ -70,16 +68,4 @@ class Paddle1DraggableComponent extends SpriteComponent
     super.onCollision(intersectionPoints, other);
     if (other == PuckComponent()) print("collided ------");
   }
-
-  // @override
-  // bool onDragEnd(DragEndEvent event) {
-  //   dragDeltaPosition = null;
-  //   return false;
-  // }
-
-  // @override
-  // bool onDragCancel(DragCancelEvent event) {
-  //   dragDeltaPosition = null;
-  //   return false;
-  // }
 }
