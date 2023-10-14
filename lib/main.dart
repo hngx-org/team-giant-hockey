@@ -1,4 +1,3 @@
-
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 
@@ -6,12 +5,13 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:team_giant_hockey/new_game/new_home_page.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
-
 
 import 'package:device_preview/device_preview.dart';
 
@@ -27,9 +27,9 @@ AppTheme appTheme = AppTheme();
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
+  // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
-  runApp(GameWidget(game: MyGame()));
+  // runApp(GameWidget(game: MyGame()));
   runApp(
     DevicePreview(
       enabled: false,
@@ -44,16 +44,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: SignUpScreen()
-      
-      // GameMenuScreen(),
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 800),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        // Use builder only if you need to use library outside ScreenUtilInit context
+        builder: (_, child) {
+          return GetMaterialApp(
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                useMaterial3: true,
+              ),
+              home: NewHomePage()
+
+              // GameMenuScreen(),
+              );
+        });
   }
 }
