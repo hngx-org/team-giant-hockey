@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:team_giant_hockey/core/app_export.dart';
 import 'package:team_giant_hockey/new_game/button.dart';
 import 'package:team_giant_hockey/new_game/centre_line.dart';
 import 'package:team_giant_hockey/new_game/game_enum.dart';
+import 'package:team_giant_hockey/new_game/game_provider.dart';
 import 'package:team_giant_hockey/new_game/player.dart';
 import 'package:team_giant_hockey/new_game/player_chip.dart';
 import 'package:team_giant_hockey/new_game/spaces.dart';
@@ -22,14 +26,52 @@ class NewGameScreen extends StatefulWidget {
 }
 
 class _NewGameScreenState extends State<NewGameScreen> {
-  @override
+@override
   void initState() {
+    super.initState();
+    final paddleColorProvider =
+        Provider.of<PaddleColorProvider>(context, listen: false);
+    if (widget.gameMode == GameMode.ai) {
+      player1 = Player(
+        name: "Computer",
+        color: paddleColorProvider.player1Color,
+      );
+
+      player2 = Player(
+        name: "Player",
+        color: paddleColorProvider.player2Color,
+      );
+    } else if (widget.gameMode == GameMode.player2) {
+      player1 = Player(
+        name: "Player 1",
+        color: paddleColorProvider.player1Color,
+      );
+
+      player2 = Player(
+        name: "Player 2",
+        color: paddleColorProvider.player2Color,
+      );
+    } else {
+      player1 = Player(
+        name: "Player 1",
+        color: paddleColorProvider.player1Color,
+      );
+
+      player2 = Player(
+        name: "Player 2",
+        color: paddleColorProvider.player2Color,
+      );
+    }
+
+    ball = Puck(
+      name: paddleColorProvider.puckColor.toString(),
+      color: paddleColorProvider.puckColor,
+    );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       // getGameDetails();
     });
-    // TODO: implement initState
-    super.initState();
   }
+
 
   Player player1 = Player(
     name: "Computer",
@@ -146,6 +188,43 @@ class _NewGameScreenState extends State<NewGameScreen> {
       }
     }
   }
+
+  movePlayer1Multiplayer(
+    Player player,
+    double dx,
+    double dy,
+  ) async {
+    if (lastKnownOppX == dx && lastKnownOppY == dy) {
+      return;
+    }
+
+    final gridX =
+        ((MediaQuery.of(context).size.width - 14.w) / 5).ceilToDouble();
+    final gridY =
+        ((MediaQuery.of(context).size.height - 14.w) / 11).ceilToDouble();
+    const xGrids = 5;
+    const yGrids = 11;
+    lastKnownOppX = dx;
+    lastKnownOppY = dy;
+
+    player.left = gridX * (xGrids - dx);
+    player.left = player.left <= 7.w ? 7.w : player.left;
+    player.left = player.left < (tableWidth - playerSize.w + 7.w)
+        ? player.left
+        : (tableWidth - playerSize.w + 7.w);
+
+    player.top = (gridY * (yGrids - dy));
+    player.top = player.top > 7.w ? player.top : 7.w;
+    if (player.top == gridY) {
+      player.top = 7.w;
+    } else {
+      player.top = player.top >
+              (MediaQuery.of(context).size.height / 2 - (playerSize.w + 7.w))
+          ? (MediaQuery.of(context).size.height / 2 - (playerSize.w + 7.w))
+          : player1.top;
+    }
+  }
+
 
   movePlayer2(
     Player player,
@@ -269,54 +348,56 @@ class _NewGameScreenState extends State<NewGameScreen> {
     }
   }
 
-  void defendGoal() {
-    // Calculate the desired defensive position for the computer player based on the ball's position.
-    double desiredX = ball.centerX;
-    double desiredY = ball.centerY;
 
-    // Adjust desiredX to stay within the computer player's half of the field horizontally.
-    double minX = 0;
-    double maxX = tableWidth - (player1.size);
+  void updateAI() {
+    //print(ball.centerX);
+    if ((ball.centerX - player1.centerX) < playerSize &&
+        tableWidth - ball.centerX < 40) {
+      player1.left -= Random().nextDouble() * 20;
+      player1.top -= Random().nextDouble() * 20;
+    } else if ((ball.centerX - player1.centerX) < playerSize &&
+        ball.centerX < 40) {
+      player1.left += Random().nextDouble() * 20;
+      player1.top -= Random().nextDouble() * 20;
+    } else {
+      if (ball.bottom < tableHeight / 2) {
+        if (ball.centerX > player1.centerX) {
+          // Move the paddle right to follow the puck
 
-    desiredX = desiredX.clamp(minX, maxX);
-    // Adjust desiredY to stay within the computer player's half of the field vertically.
-    double minY = 0; // Adjust this value as needed.
-    double maxY = (tableHeight - 100) / 2;
-    desiredY = desiredY.clamp(minY, maxY);
+          player1.left += widget.speed ?? 2.0;
+        } else if (ball.centerX < player1.centerX) {
+          // Move the paddle left to follow the puck
 
-    // Move the computer player's paddle towards the desired position.
-    if (player1.centerX < desiredX) {
-      if (player1.left < maxX) {
-        player1.left += widget.speed ??
-            2.0; // Adjust the speed of the computer player's horizontal movement.
+          player1.left -= widget.speed ?? 2.0;
+        }
+
+        // Check if the ball is in the AI's half
+
+        // If the puck is in the AI's half, adjust the paddle's vertical position
+        if (ball.centerY > player1.centerY) {
+          // Move the paddle down to follow the puck
+          player1.top += widget.speed ?? 2.0;
+        } else if (ball.centerY < player1.centerY) {
+          // Move the paddle up to follow the puck
+          player1.top -= widget.speed ?? 2.0;
+        }
+      } else {
+        if (player1.top >= playerSize * 1.2) {
+          player1.top -= widget.speed ?? 2.0;
+        }
+        if (player1.left >= tableWidth / 2 - playerRadius) {
+          player1.left -= widget.speed ?? 2.0;
+        } else {
+          player1.left += widget.speed ?? 2.0;
+        }
       }
-    } else if (player1.centerX > desiredX) {
-      if (player1.left < 8) {
-        return;
-      }
-
-      player1.left -= widget.speed ??
-          2.0; // Adjust the speed of the computer player's horizontal movement.
     }
-    previousPoint = Offset(player1.left, 0);
 
-    previousPoint = Offset(player1.left, 0);
-
-    if (player1.centerY < desiredY) {
-      player1.top +=
-          1.0; // Adjust the speed of the computer player's vertical movement.
-    } else if (player1.centerY > desiredY) {
-      player1.top -=
-          1.0; // Adjust the speed of the computer player's vertical movement.
-    }
-    previousPoint = Offset(player1.left, player1.top);
-    // Ensure the computer player's paddle stays within its half of the field horizontally and vertically.
-    player1.top = player1.top.clamp(minY, maxY);
-
-    // Update the UI to reflect the computer player's new position.
-    if (mounted) {
-      setState(() {});
-    }
+    // Limit the paddle's movement within the game boundaries
+    player1.left =
+        max(min(player1.left, tableWidth - (playerSize + ballSize)), 0);
+    player1.top = max(
+        min(player1.top, (tableHeight / 2) - 100), (playerRadius + ballSize));
   }
 
   void handlePaddleCollision(Player player) {
@@ -382,7 +463,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
       gameIsStarted = true;
     } else {
       if (widget.gameMode == GameMode.ai && !isPaused) {
-        defendGoal();
+        updateAI();
       }
     }
     return Scaffold(
