@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/controller/menu_controller.dart';
+import 'package:team_giant_hockey/core/app_export.dart';
 import 'package:team_giant_hockey/core/base_game.dart';
 import 'package:team_giant_hockey/core/utils/image_constants.dart';
 import 'package:team_giant_hockey/screens/games/game_screen.dart';
@@ -74,14 +75,14 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                     return GestureDetector(
                       onTap: () {
                         if (index == 0) {
-                          Get.to(GameScreen());
+                          Get.to(PlayerModeScreen());
                           // Get.to(GameWidget(game: MyGame()) );
                         } else if (index == 1) {
                           Get.to(GameRulesScreen());
                         } else if (index == 2) {
-                          Get.to(LeaderBoardScreen());
+                          Get.to(SignUpScreen());
                         } else if (index == 3) {
-                          Get.to(PlayerModeScreen());
+                          Get.to(LeaderBoardScreen());
                         } else if (index == 4) {
                           SystemNavigator.pop();
                         }

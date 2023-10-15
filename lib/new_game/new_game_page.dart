@@ -76,10 +76,12 @@ class _NewGameScreenState extends State<NewGameScreen> {
   Player player1 = Player(
     name: "Computer",
     color: Colors.red,
+    playerImage: ImageConstant.greenPuck,
   );
   Player player2 = Player(
     name: "Player 2",
     color: Colors.blue,
+    playerImage: ImageConstant.yellowPuck,
   );
 
   Puck ball = Puck(

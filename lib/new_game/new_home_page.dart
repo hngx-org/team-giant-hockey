@@ -24,13 +24,13 @@ class _NewHomePageState extends State<NewHomePage> {
           AppDialogButton(
               buttonText: "Vs Ai",
               onPressed: () {
-                Get.to(DificultySelectionScreen());
+                Get.to(const DificultySelectionScreen());
               }),
           AppDialogButton(buttonText: "multiplayer", onPressed: () {}),
           AppDialogButton(
               buttonText: "Vs player 2",
               onPressed: () {
-                Get.to(NewGameScreen(
+                Get.to(const NewGameScreen(
                   gameMode: GameMode.player2,
                 ));
               }),

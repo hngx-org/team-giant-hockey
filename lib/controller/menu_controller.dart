@@ -5,8 +5,8 @@ class GameMenuController extends GetxController {
   List<String> menus = [
     "START",
     "GAME RULES",
+    "CREATE ACCOUNT",
     "LEADERBOARD",
-    "PLAYER MODE",
     "EXIT",
   ];
 }

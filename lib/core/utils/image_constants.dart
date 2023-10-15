@@ -8,6 +8,7 @@ class ImageConstant {
   static const String gameHockeyString = "assets/images/hockey.png";
   static const String yellowPuck = "assets/images/puck_yellow.png";
   static const String greenPuck = "assets/images/puck_green.png";
+  static const String gamePuck = "assets/images/game_puck.png";
   static const String hockeyPitch = "assets/images/hockey_pitch.png";
 
   static const String crown = "assets/images/crown.png";
