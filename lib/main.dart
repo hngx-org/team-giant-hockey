@@ -9,7 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
+import 'package:team_giant_hockey/new_game/game_provider.dart';
 import 'package:team_giant_hockey/new_game/new_home_page.dart';
+import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
 
@@ -27,15 +31,22 @@ AppTheme appTheme = AppTheme();
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  await AppSharedPreferences.instance.initialize();
   // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   // runApp(GameWidget(game: MyGame()));
-  runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => const MyApp(),
-    ),
-  );
+//   runApp(
+//     DevicePreview(
+//       enabled: false,
+//       builder: (context) => const MyApp(),
+//     ),
+//   );
+// }
+
+runApp(MultiProvider(
+    providers: _providers,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -64,3 +75,13 @@ class MyApp extends StatelessWidget {
         });
   }
 }
+
+
+
+final _providers = <SingleChildWidget>[
+  ChangeNotifierProvider<GameProvider>(
+    create: (_) => GameProvider.instance,
+  ),
+  ChangeNotifierProvider(create: (context) => MyProvider()..initialize()),
+  ChangeNotifierProvider(create: (context) => PaddleColorProvider()..initialize()),
+];
