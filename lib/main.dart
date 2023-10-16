@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 
@@ -85,3 +87,76 @@ final _providers = <SingleChildWidget>[
   ChangeNotifierProvider(create: (context) => MyProvider()..initialize()),
   ChangeNotifierProvider(create: (context) => PaddleColorProvider()..initialize()),
 ];
+
+
+
+class CountdownScreen extends StatefulWidget {
+  @override
+  _CountdownScreenState createState() => _CountdownScreenState();
+}
+
+class _CountdownScreenState extends State<CountdownScreen> {
+  int count = 3;
+  bool showCountdown = true;
+  Timer? countdownTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+  }
+
+  void startCountdown() {
+    countdownTimer = Timer.periodic(Duration(seconds: 2), (timer) {
+      if (count == 0) {
+        setState(() {
+          showCountdown = false;
+          timer.cancel(); // Stop the timer when the countdown is done.
+        });
+      } else {
+        setState(() {
+          count--;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    countdownTimer?.cancel(); // Cancel the timer when the widget is disposed.
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Game Countdown'),
+      ),
+      body: Center(
+        child: Stack(
+          children: <Widget>[
+            if (showCountdown)
+              AnimatedPositioned(
+                duration: Duration(seconds: 1),
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: AnimatedOpacity(
+                    duration: Duration(seconds: 1),
+                    opacity: showCountdown ? 1.0 : 0.0,
+                    child: Text(
+                      count == 0 ? 'Go!' : count.toString(),
+                      style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}

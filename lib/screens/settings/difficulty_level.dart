@@ -8,7 +8,11 @@ import '../../themes/app_theme.dart';
 import '../../widgets/custom_text.dart';
 
 class DifficultyLevelScreen extends StatefulWidget {
-  const DifficultyLevelScreen({super.key});
+  const DifficultyLevelScreen({
+    super.key,
+    required this.paddleType
+  });
+  final String paddleType;
 
   @override
   State<DifficultyLevelScreen> createState() => _DifficultyLevelScreenState();
@@ -123,19 +127,22 @@ class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
                 child: GestureDetector(
                   onTap: () {
                     if (difficultylevels[selected].title == "Easy") {
-                      Get.to(const NewGameScreen(
+                      Get.to( NewGameScreen(
                         gameMode: GameMode.ai,
                         speed: 3.0,
+                        paddleType: widget.paddleType,
                       ));
                     } else if (difficultylevels[selected].title == "Medium") {
-                      Get.to(const NewGameScreen(
+                      Get.to( NewGameScreen(
                         gameMode: GameMode.ai,
                         speed: 5.0,
+                        paddleType: widget.paddleType,
                       ));
                     } else if (difficultylevels[selected].title == "Hard") {
-                      Get.to(const NewGameScreen(
+                      Get.to( NewGameScreen(
                         gameMode: GameMode.ai,
                         speed: 7.0,
+                        paddleType: widget.paddleType,
                       ));
                     }
                   },

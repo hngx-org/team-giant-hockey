@@ -27,7 +27,12 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
   @override
   void initState() {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    FlameAudio.bgm.play('background_music1.mp3');
+    if(FlameAudio.bgm.isPlaying){
+
+    } else {
+      FlameAudio.bgm.play('background_music1.mp3');
+    }
+    
     super.initState();
   }
 

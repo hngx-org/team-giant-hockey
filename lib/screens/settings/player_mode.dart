@@ -180,13 +180,16 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
               GestureDetector(
                 onTap: () {
                   if (playerList[selected].title == "Single Player") {
-                    Get.to(const DifficultyLevelScreen());
+                    Get.to(DifficultyLevelScreen(
+                      paddleType: puckNumber == 0 ? "green": "yellow",
+                    ));
                   } else if (playerList[selected].title == "Double Player") {
-                    Get.to(const NewGameScreen(
+                    Get.to( NewGameScreen(
                       gameMode: GameMode.player2,
+                      paddleType: puckNumber == 0 ? "green": "yellow",
                     ));
                   }
-                  print(playerList[selected].title);
+                  print(puckNumber == 0 ? "green": "yellow");
                 },
                 child: Center(
                   child: customCentreText(
