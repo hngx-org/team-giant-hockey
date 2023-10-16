@@ -1,13 +1,10 @@
-import 'package:flame/game.dart';
+
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/controller/menu_controller.dart';
 import 'package:team_giant_hockey/core/app_export.dart';
-import 'package:team_giant_hockey/core/base_game.dart';
-import 'package:team_giant_hockey/core/utils/image_constants.dart';
-import 'package:team_giant_hockey/screens/games/game_screen.dart';
 import 'package:team_giant_hockey/screens/settings/game_rule.dart';
 import 'package:team_giant_hockey/screens/settings/leaderboard.dart';
 import 'package:team_giant_hockey/screens/settings/player_mode.dart';

@@ -1,15 +1,9 @@
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:team_giant_hockey/core/utils/image_constants.dart';
 import 'package:team_giant_hockey/widgets/size_config.dart';
-
 import '../../core/app_export.dart';
 import '../../services/repository/authentication_repository/authentication_repository.dart';
 import '../../themes/app_theme.dart';
 import '../../widgets/custom_text.dart';
-
-import '../auth/sign_in.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

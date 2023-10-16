@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:team_giant_hockey/new_game/player.dart';
 
 class PlayerChip extends StatelessWidget {
