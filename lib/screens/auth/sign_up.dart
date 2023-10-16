@@ -16,6 +16,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
+      backgroundColor: AppTheme.appBackgroundColor
+      ,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -53,6 +55,14 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+           ClipPath(
+            clipper: ContainerCurve(),
+            child: Container(
+              height: getProportionateScreenHeight(100),
+              width: double.infinity,
+              color: AppTheme.primaryColor,
             ),
           ),
           SignUpFormWidget(),

@@ -4,6 +4,7 @@ import '../services/repository/authentication_repository/authentication_reposito
 
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find(); 
+  var isLoading = false.obs; 
 
   // TextField Controllers to get data from TextFields
   final email = TextEditingController();

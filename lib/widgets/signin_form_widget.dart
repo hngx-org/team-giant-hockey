@@ -15,7 +15,11 @@ class _SignInFormWidgetState extends State<SignInFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return
+    
+    
+    
+     Form(
       key: _formKey,
       child: Expanded(
         child: Obx(() {
@@ -25,7 +29,7 @@ class _SignInFormWidgetState extends State<SignInFormWidget> {
                 )
               : Container(
                    decoration: BoxDecoration(
-                  color: Colors.black, // Set the background color to black
+                  color:  AppTheme.appBackgroundColor, // Set the background color to black
                 ),
                 child: SingleChildScrollView(
                   child: Column(

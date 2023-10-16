@@ -297,7 +297,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
   bool showStartText = true;
   late double distanceBall2P1;
   late double distanceBall2P2;
-  int gameEndsAt = 10;
+  int gameEndsAt = 5;
   Offset? previousPoint;
 
   void nextRound(String player) {
