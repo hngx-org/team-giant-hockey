@@ -27,58 +27,26 @@ class TopSpace extends StatelessWidget {
               ),
             ),
           ),
+          RotatedBox(
+            quarterTurns: 2,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                "assets/images/goal_post_green.png",
+                scale: 2.5,
+              ),
+            ),
+          ),
+          SizedBox(height: 100.h),
           Column(
             children: [
               SizedBox(height: 100.h),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .1),
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * .1),
                 child: Row(
                   children: [
-                    // Container(
-                    //   height: 80.h,
-                    //   width: 80.h,
-                    //   decoration: BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     color: Colors.white.withOpacity(.8),
-                    //     border: Border.all(
-                    //       color: Colors.red.shade800,
-                    //       width: 4.w,
-                    //     ),
-                    //   ),
-                    //   child: Center(
-                    //     child: Container(
-                    //       height: 10.h,
-                    //       width: 10.h,
-                    //       decoration: BoxDecoration(
-                    //         color: Colors.red.shade800,
-                    //         shape: BoxShape.circle,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     const Spacer(),
-                    // Container(
-                    //   height: 80.h,
-                    //   width: 80.h,
-                    //   decoration: BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     color: Colors.white.withOpacity(.8),
-                    //     border: Border.all(
-                    //       color: Colors.red.shade800,
-                    //       width: 4.w,
-                    //     ),
-                    //   ),
-                    //   child: Center(
-                    //     child: Container(
-                    //       height: 10.h,
-                    //       width: 10.h,
-                    //       decoration: BoxDecoration(
-                    //         color: Colors.red.shade800,
-                    //         shape: BoxShape.circle,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -116,58 +84,25 @@ class BottomSpace extends StatelessWidget {
               ),
             ),
           ),
+          RotatedBox(
+            quarterTurns: 2,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Image.asset(
+                "assets/images/goal_post_red.png",
+                scale: 2.5,
+              ),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .1),
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * .1),
                 child: Row(
                   children: [
-                    // Container(
-                    //   height: 80.h,
-                    //   width: 80.h,
-                    //   decoration: BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     color: Colors.white.withOpacity(.8),
-                    //     border: Border.all(
-                    //       color: Colors.red.shade800,
-                    //       width: 4.w,
-                    //     ),
-                    //   ),
-                    //   child: Center(
-                    //     child: Container(
-                    //       height: 10.h,
-                    //       width: 10.h,
-                    //       decoration: BoxDecoration(
-                    //         color: Colors.red.shade800,
-                    //         shape: BoxShape.circle,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     const Spacer(),
-                    // Container(
-                    //   height: 80.h,
-                    //   width: 80.h,
-                    //   decoration: BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     color: Colors.white.withOpacity(.8),
-                    //     border: Border.all(
-                    //       color: Colors.red.shade800,
-                    //       width: 4.w,
-                    //     ),
-                    //   ),
-                    //   child: Center(
-                    //     child: Container(
-                    //       height: 10.h,
-                    //       width: 10.h,
-                    //       decoration: BoxDecoration(
-                    //         color: Colors.red.shade800,
-                    //         shape: BoxShape.circle,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
