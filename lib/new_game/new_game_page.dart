@@ -1,11 +1,11 @@
 import 'dart:math';
 
+import 'package:confetti/confetti.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:team_giant_hockey/core/app_export.dart';
-import 'package:team_giant_hockey/new_game/button.dart';
 import 'package:team_giant_hockey/new_game/centre_line.dart';
 import 'package:team_giant_hockey/new_game/game_enum.dart';
 import 'package:team_giant_hockey/new_game/game_provider.dart';
@@ -35,8 +35,16 @@ class NewGameScreen extends StatefulWidget {
 }
 
 class _NewGameScreenState extends State<NewGameScreen> {
+  final ConfettiController confettiController = ConfettiController();
+  bool isConfettiPlay = false;
+
   @override
   void initState() {
+    confettiController.addListener(() {
+      isConfettiPlay =
+          confettiController.state == ConfettiControllerState.playing;
+    });
+
     super.initState();
     final paddleColorProvider =
         Provider.of<PaddleColorProvider>(context, listen: false);
@@ -565,7 +573,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                 bottom: 0, // Align to the top
                 child: Container(
                   width: goalWidth,
-                  height: 6.w,
+                  height: 7.w,
                   color: const Color.fromRGBO(
                       255, 0, 0, 1), // Transparent background
                 ),
@@ -624,47 +632,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
                               ),
                             );
                           }
-                          // if (widget.gameMode == GameMode.multiplayer) {
-                          //   return StreamBuilder(
-                          //     stream: FirebaseFirestore.instance
-                          //         .collection("playing")
-                          //         .doc(widget.gameId)
-                          //         .snapshots(),
-                          //     builder: (context, snapshot) {
-                          //       if (snapshot.hasData) {
-                          //         final game =
-                          //             Game.fromJson(snapshot.data!.data()!);
-                          //         if (game.players?.playerId1?.id ==
-                          //             widget.playerId) {
-                          //           WidgetsBinding.instance
-                          //               .addPostFrameCallback((t) {
-                          //             movePlayer1Multiplayer(
-                          //               player1,
-                          //               game.player2Position!.x!.toDouble(),
-                          //               game.player2Position!.y!.toDouble(),
-                          //             );
-                          //             setState(() {});
-                          //           });
-                          //         } else if (game.players?.playerId2?.id ==
-                          //             widget.playerId) {
-                          //           WidgetsBinding.instance
-                          //               .addPostFrameCallback((t) {
-                          //             movePlayer1Multiplayer(
-                          //               player1,
-                          //               game.player1Position!.x!.toDouble(),
-                          //               game.player1Position!.y!.toDouble(),
-                          //             );
-                          //             setState(() {});
-                          //           });
-                          //         }
-                          //       }
-
-                          //       return PlayerChip(
-                          //         player: player1,
-                          //       );
-                          //     },
-                          //   );
-                          // }
                           return PlayerChip(
                             player: player1,
                           );
@@ -704,17 +671,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                             isPaused = true;
                           });
                         },
-                        // child: Container(
-                        //   height: 48.h,
-                        //   width: 48.h,
-                        //   decoration: BoxDecoration(
-                        //     shape: BoxShape.circle,
-                        //     border: Border.all(width: 4.w),
-                        //     color: AppTheme.whiteColor,
-                        //   ),
                         child: Center(
-                          // child: Transform.rotate(
-                          // angle: math.pi / 2,
                           child: Icon(
                             Icons.pause,
                             size: 55.h,
@@ -748,25 +705,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                       child: Image.asset(
                         ImageConstant.gamePuck,
                         scale: 4,
-                      )
-                      //  Container(
-                      //   padding: const EdgeInsets.all(7.0),
-                      //   width: ballSize,
-                      //   height: ballSize,
-                      //   decoration: BoxDecoration(
-                      //     color: ball.color,
-                      //     shape: BoxShape.circle,
-                      //   ),
-                      //   child: Container(
-                      //     width: ballSize,
-                      //     height: ballSize,
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.white.withOpacity(.3),
-                      //       shape: BoxShape.circle,
-                      //     ),
-                      //   ),
-                      // ),
-                      )
+                      ))
                   : const SizedBox.shrink(),
               !gameIsFinished
                   ? Positioned(
@@ -927,19 +866,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
                               weight: FontWeight.w800,
                               colorName: AppTheme.whiteColor,
                             ),
-                            // Text(
-                            //   "PAUSED",
-                            //   style: Theme.of(context)
-                            //       .textTheme
-                            //       .labelMedium!
-                            //       .copyWith(
-                            //           fontSize: 36.sp,
-                            //           fontWeight: FontWeight.w900,
-                            //           color: Colors.white),
-                            // ),
-                            // SizedBox(
-                            //   height: 24.h,
-                            // ),
                             AppDialogButton(
                               buttonText: "RESUME",
                               onPressed: () {
@@ -950,23 +876,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
                                 });
                               },
                             ),
-                            // SizedBox(
-                            //   height: 16.h,
-                            // ),
-                            // Button(
-                            //   child: Text("RESUME",
-                            //       style: Theme.of(context)
-                            //           .textTheme
-                            //           .labelMedium!
-                            //           .copyWith(fontSize: 18.sp)),
-                            //   onTap: () {
-                            //     setState(() {
-                            //       xSpeed = temporaryXSpeed;
-                            //       ySpeed = temporaryYSpeed;
-                            //       isPaused = false;
-                            //     });
-                            //   },
-                            // ),
                             AppDialogButton(
                               buttonText: "RESTART",
                               onPressed: () {},
@@ -980,25 +889,25 @@ class _NewGameScreenState extends State<NewGameScreen> {
                                 Get.back();
                               },
                             ),
-                            // Button(
-                            //   child: Text(
-                            //     "QUIT",
-                            //     style: Theme.of(context)
-                            //         .textTheme
-                            //         .labelMedium!
-                            //         .copyWith(fontSize: 18.sp),
-                            //   ),
-                            //   onTap: () {
-                            //     Navigator.pop(context);
-                            //   },
-                            // )
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
+              !gameIsFinished
+                  ? const SizedBox()
+                  : Positioned(
+                      left: (sWidth - goalWidth) / 2, // Centered
+                      top: 0,
+                      child: ConfettiWidget(
+                        numberOfParticles: 20,
+                        maxBlastForce: 100,
+                        confettiController: confettiController,
+                        shouldLoop: true,
+                      ),
+                    )
             ],
           ),
         ),
