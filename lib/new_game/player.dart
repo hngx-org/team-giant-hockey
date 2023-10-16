@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/utils/image_constants.dart';
+
 class Player {
   double left = 0;
   double right = 0;
@@ -13,19 +15,15 @@ class Player {
   final String name;
   final double size = playerSize;
   final Color color;
+  final String playerImage ;
 
-  Player({
-    required this.name,
-    required this.color,
-  });
+  Player({required this.name, required this.color, this.playerImage = ImageConstant.greenPuck});
 }
-
 
 const playerSize = 80.0;
 const playerRadius = playerSize / 2;
 const ballSize = 40.0;
 const ballRadius = ballSize / 2;
-
 
 class Puck {
   double left = 0;
@@ -44,6 +42,7 @@ class Puck {
   final String name;
   final double size = ballSize;
   final Color color;
+  final String puckImage = ImageConstant.gamePuck;
 
   Puck({
     required this.name,

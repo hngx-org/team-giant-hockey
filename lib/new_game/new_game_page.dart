@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -15,18 +16,26 @@ import 'package:team_giant_hockey/widgets/size_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 
+import '../widgets/custom_text.dart';
+import '../widgets/dialog_button.dart';
+
 class NewGameScreen extends StatefulWidget {
   final GameMode gameMode;
   final double? speed;
+  final String paddleType;
 
-  const NewGameScreen({super.key, required this.gameMode, this.speed});
+  const NewGameScreen(
+      {super.key,
+      required this.gameMode,
+      required this.paddleType,
+      this.speed});
 
   @override
   State<NewGameScreen> createState() => _NewGameScreenState();
 }
 
 class _NewGameScreenState extends State<NewGameScreen> {
-@override
+  @override
   void initState() {
     super.initState();
     final paddleColorProvider =
@@ -35,32 +44,48 @@ class _NewGameScreenState extends State<NewGameScreen> {
       player1 = Player(
         name: "Computer",
         color: paddleColorProvider.player1Color,
+        playerImage: widget.paddleType == "green"
+            ? ImageConstant.yellowPuck
+            : ImageConstant.greenPuck,
       );
 
       player2 = Player(
         name: "Player",
         color: paddleColorProvider.player2Color,
+        playerImage: widget.paddleType == "green"
+            ? ImageConstant.greenPuck
+            : ImageConstant.yellowPuck,
       );
     } else if (widget.gameMode == GameMode.player2) {
       player1 = Player(
         name: "Player 1",
         color: paddleColorProvider.player1Color,
+        playerImage: widget.paddleType == "green"
+            ? ImageConstant.greenPuck
+            : ImageConstant.yellowPuck,
       );
 
       player2 = Player(
-        name: "Player 2",
-        color: paddleColorProvider.player2Color,
-      );
+          name: "Player 2",
+          color: paddleColorProvider.player2Color,
+          playerImage: widget.paddleType == "green"
+              ? ImageConstant.yellowPuck
+              : ImageConstant.greenPuck);
     } else {
       player1 = Player(
         name: "Player 1",
         color: paddleColorProvider.player1Color,
+        playerImage: widget.paddleType == "green"
+            ? ImageConstant.greenPuck
+            : ImageConstant.yellowPuck,
       );
 
       player2 = Player(
-        name: "Player 2",
-        color: paddleColorProvider.player2Color,
-      );
+          name: "Player 2",
+          color: paddleColorProvider.player2Color,
+          playerImage: widget.paddleType == "green"
+              ? ImageConstant.yellowPuck
+              : ImageConstant.greenPuck);
     }
 
     ball = Puck(
@@ -72,14 +97,15 @@ class _NewGameScreenState extends State<NewGameScreen> {
     });
   }
 
-
   Player player1 = Player(
     name: "Computer",
     color: Colors.red,
+    playerImage: ImageConstant.greenPuck,
   );
   Player player2 = Player(
     name: "Player 2",
     color: Colors.blue,
+    playerImage: ImageConstant.yellowPuck,
   );
 
   Puck ball = Puck(
@@ -153,7 +179,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
   String textStart = 'Tap to start!';
   final textStartHeight = getProportionateScreenHeight(120);
   final textStartWidth = getProportionateScreenWidth(480);
-  double textStartFontSize = getProportionateScreenWidth(30);
+  double textStartFontSize = getProportionateScreenWidth(35);
   late final double textStartTop;
   late final double textStartLeft;
 
@@ -225,7 +251,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
     }
   }
 
-
   movePlayer2(
     Player player,
     double dx,
@@ -283,12 +308,12 @@ class _NewGameScreenState extends State<NewGameScreen> {
     showStartText = true;
     if (player1.score == gameEndsAt) {
       textStart = "${player1.name} Wins";
-      textStartFontSize *= 2;
+      textStartFontSize *= 1.5;
       turn = player1.name;
       gameIsFinished = true;
     } else if (player2.score == gameEndsAt) {
       textStart = "${player2.name} Wins";
-      textStartFontSize *= 2;
+      textStartFontSize *= 1.5;
       turn = player2.name;
       gameIsFinished = true;
     }
@@ -339,15 +364,16 @@ class _NewGameScreenState extends State<NewGameScreen> {
       // Player1 (top player) calculations
       if (distanceBall2P1 <= playerRadius + ballRadius) {
         handlePaddleCollision(player1);
+        FlameAudio.play("collision_sound.wav");
       }
 
       // Player2 (bottom player) calculations
       else if (distanceBall2P2 <= playerRadius + ballRadius) {
         handlePaddleCollision(player2);
+        FlameAudio.play("collision_sound.wav");
       }
     }
   }
-
 
   void updateAI() {
     //print(ball.centerX);
@@ -410,9 +436,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
     double verticalSpeed = verticalDistance / playerRadius;
 
     // Adjust the speed factors (make the ball move faster or slower)
-    double speedFactor = 2.0;
+    double speedFactor = 3.0;
     // Limit the maximum speed
-    double maxSpeed = 3.0;
+    double maxSpeed = 4.0;
     horizontalSpeed = horizontalSpeed.clamp(-maxSpeed, maxSpeed);
     verticalSpeed = verticalSpeed.clamp(-maxSpeed, maxSpeed);
 
@@ -435,6 +461,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
     if (player.shotY != 0) {
       ySpeed = (player.shotY) / speedFactor;
     }
+    // FlameAudio.play("collision_sound.wav");
   }
 
   bool isPaused = false;
@@ -467,7 +494,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
       }
     }
     return Scaffold(
-      backgroundColor: AppTheme.blackColor,
+      backgroundColor: AppTheme.appBackgroundColor,
       resizeToAvoidBottomInset: true,
       body: Center(
         child: Container(
@@ -477,31 +504,50 @@ class _NewGameScreenState extends State<NewGameScreen> {
           child: Stack(
             children: [
               Positioned(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(child: TopSpace(playerSize: playerSize.w)),
-                    Divider(color: AppTheme.blackColor, thickness: 3.w),
-                    SizedBox(height: playerSize.h),
-                    const CenterLine(),
-                    SizedBox(height: playerSize.h),
-                    Divider(color: AppTheme.blackColor, thickness: 3.w),
-                    Expanded(child: BottomSpace(playerSize: playerSize.w)),
-                  ],
-                ),
-              ),
-              Positioned(
                 left: 0, // Align to the left edge of the table
                 top: 0, // Align to the top edge of the table
                 child: Container(
                   width: sWidth,
                   height: sHeight,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 7.w,
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color.fromRGBO(255, 0, 0, 1),
+                        Color.fromARGB(255, 255, 217, 0),
+                        Color.fromARGB(255, 0, 0, 255),
+                        Color.fromARGB(255, 0, 255, 0)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.transparent, // Transparent border color
+                          width: 5.0, // Border width
+                        ),
+                        color: AppTheme.appBackgroundColor,
+                      ),
                     ),
                   ),
+                ),
+              ),
+              Positioned(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(child: TopSpace(playerSize: playerSize.w)),
+                    Divider(color: AppTheme.appBackgroundColor, thickness: 3.w),
+                    SizedBox(height: playerSize.h),
+                    const CenterLine(),
+                    SizedBox(height: playerSize.h),
+                    Divider(color: AppTheme.appBackgroundColor, thickness: 3.w),
+                    Expanded(child: BottomSpace(playerSize: playerSize.w)),
+                  ],
                 ),
               ),
               Positioned(
@@ -509,8 +555,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                 top: 0, // Align to the top
                 child: Container(
                   width: goalWidth,
-                  height: 7.w,
-                  color: Colors.white,
+                  height: 6.w,
+                  color: const Color.fromARGB(255, 0, 255, 0),
                 ),
               ),
               // Goalpost 2
@@ -519,8 +565,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
                 bottom: 0, // Align to the top
                 child: Container(
                   width: goalWidth,
-                  height: 7.w,
-                  color: Colors.white, // Transparent background
+                  height: 6.w,
+                  color: const Color.fromRGBO(
+                      255, 0, 0, 1), // Transparent background
                 ),
               ),
               !gameIsFinished
@@ -636,12 +683,12 @@ class _NewGameScreenState extends State<NewGameScreen> {
                       child: Text(
                         player1.score.toString(),
                         style: TextStyle(
-                            fontSize: 48.sp,
+                            fontSize: 40.sp,
                             fontWeight: FontWeight.w700,
                             color: AppTheme.whiteColor),
                       ),
                     ),
-                    SizedBox(height: 51.h),
+                    SizedBox(height: 53.h),
                     Visibility(
                       visible: (xSpeed != 0 && ySpeed != 0),
                       maintainAnimation: true,
@@ -657,23 +704,25 @@ class _NewGameScreenState extends State<NewGameScreen> {
                             isPaused = true;
                           });
                         },
-                        child: Container(
-                          height: 48.h,
-                          width: 48.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(width: 4.w),
+                        // child: Container(
+                        //   height: 48.h,
+                        //   width: 48.h,
+                        //   decoration: BoxDecoration(
+                        //     shape: BoxShape.circle,
+                        //     border: Border.all(width: 4.w),
+                        //     color: AppTheme.whiteColor,
+                        //   ),
+                        child: Center(
+                          // child: Transform.rotate(
+                          // angle: math.pi / 2,
+                          child: Icon(
+                            Icons.pause,
+                            size: 55.h,
+                            color: AppTheme.whiteColor,
                           ),
-                          child: Center(
-                            child: Transform.rotate(
-                              angle: math.pi / 2,
-                              child: Icon(
-                                Icons.pause,
-                                size: 30.h,
-                              ),
-                            ),
-                          ),
+                          // ),
                         ),
+                        // ),
                       ),
                     ),
                     SizedBox(height: 51.h),
@@ -682,9 +731,10 @@ class _NewGameScreenState extends State<NewGameScreen> {
                       child: Text(
                         player2.score.toString(),
                         style: TextStyle(
-                            fontSize: 48.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.whiteColor),
+                          fontSize: 40.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.whiteColor,
+                        ),
                       ),
                     ),
                   ],
@@ -695,99 +745,161 @@ class _NewGameScreenState extends State<NewGameScreen> {
                       duration: const Duration(milliseconds: 15),
                       left: ball.left,
                       top: ball.top,
-                      child: Container(
-                        padding: const EdgeInsets.all(7.0),
-                        width: ballSize,
-                        height: ballSize,
-                        decoration: BoxDecoration(
-                          color: ball.color,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Container(
-                          width: ballSize,
-                          height: ballSize,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(.3),
-                            shape: BoxShape.circle,
+                      child: Image.asset(
+                        ImageConstant.gamePuck,
+                        scale: 4,
+                      )
+                      //  Container(
+                      //   padding: const EdgeInsets.all(7.0),
+                      //   width: ballSize,
+                      //   height: ballSize,
+                      //   decoration: BoxDecoration(
+                      //     color: ball.color,
+                      //     shape: BoxShape.circle,
+                      //   ),
+                      //   child: Container(
+                      //     width: ballSize,
+                      //     height: ballSize,
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.white.withOpacity(.3),
+                      //       shape: BoxShape.circle,
+                      //     ),
+                      //   ),
+                      // ),
+                      )
+                  : const SizedBox.shrink(),
+              !gameIsFinished
+                  ? Positioned(
+                      width: textStartWidth,
+                      height: textStartHeight,
+                      left: textStartLeft,
+                      top: textStartTop,
+                      child: Center(
+                        child: Visibility(
+                          visible: showStartText,
+                          child: TextButton(
+                            style: Theme.of(context)
+                                .textButtonTheme
+                                .style
+                                ?.copyWith(
+                                  backgroundColor:
+                                      const MaterialStatePropertyAll(
+                                    Colors.white,
+                                  ),
+                                ),
+                            child: RotatedBox(
+                              quarterTurns: turn == player1.name ? 2 : 0,
+                              child: customCentreText(
+                                inputText: textStart,
+                                fontSize: textStartFontSize,
+                                weight: FontWeight.w800,
+                                colorName: AppTheme.whiteColor,
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (gameIsFinished) {
+                                return;
+                              }
+                              xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
+                              ySpeed = turn == player1.name ? 1.2 : -1.2;
+                              showStartText = false;
+                              while (mounted) {
+                                ball.left += xSpeed;
+                                ball.top += ySpeed;
+                                if (ball.left > tableWidth - ballSize) {
+                                  xSpeed = (-1) * (xSpeed.abs());
+                                } else if (ball.left <= 0) {
+                                  xSpeed = xSpeed.abs();
+                                }
+                                if (ball.top > tableHeight - ballSize / 3) {
+                                  player1.left = sWidth / 2 - playerRadius;
+                                  player1.top = playerSize * 1.2;
+                                  player2.left = sWidth / 2 - playerRadius;
+                                  player2.top = sHeight - (playerSize * 2.5);
+                                  ball.left = sWidth / 2 - ballRadius;
+                                  ball.top = (sHeight / 2) - ballRadius - 50;
+                                  setState(() {});
+                                  nextRound(player1.name);
+                                  break;
+                                } else if (ball.top <= 0 - ballSize * 2 / 3) {
+                                  player1.left = sWidth / 2 - playerRadius;
+                                  player1.top = playerSize * 1.2;
+                                  player2.left = sWidth / 2 - playerRadius;
+                                  player2.top = sHeight - (playerSize * 2.5);
+                                  ball.left = sWidth / 2 - ballRadius;
+                                  ball.top = (sHeight / 2) - ballRadius - 50;
+                                  nextRound(player2.name);
+                                  break;
+                                }
+
+                                doTheMathWork();
+                                await Future.delayed(
+                                    const Duration(milliseconds: 1));
+                                if (mounted) {
+                                  setState(() {});
+                                }
+                              }
+                            },
                           ),
                         ),
                       ),
                     )
-                  : const SizedBox.shrink(),
-
-              Positioned(
-                width: textStartWidth,
-                height: textStartHeight,
-                left: textStartLeft,
-                top: textStartTop,
-                child: Center(
-                  child: Visibility(
-                    visible: showStartText,
-                    child: TextButton(
-                      style: Theme.of(context).textButtonTheme.style?.copyWith(
-                            backgroundColor: const MaterialStatePropertyAll(
-                              Colors.white,
+                  : Visibility(
+                      visible: true,
+                      child: Container(
+                        height: sHeight,
+                        width: sWidth,
+                        color: Colors.black.withOpacity(0.8),
+                        child: Center(
+                          child: Container(
+                            height: sHeight,
+                            width: sWidth,
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 50,
+                              vertical: 250,
                             ),
-                          ),
-                      child: RotatedBox(
-                        quarterTurns: turn == player1.name ? 2 : 0,
-                        child: Text(
-                          textStart,
-                          style: TextStyle(
-                            fontSize: textStartFontSize,
-                            color: turn == player1.name
-                                ? player1.color
-                                : player2.color,
+                            decoration: BoxDecoration(
+                                color: AppTheme.appBackgroundColor,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(30, 15, 30, 40),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  customCentreText(
+                                    inputText: textStart,
+                                    fontSize: 32,
+                                    weight: FontWeight.w800,
+                                    colorName: AppTheme.whiteColor,
+                                  ),
+                                  AppDialogButton(
+                                    buttonText: "REPLAY",
+                                    onPressed: () {
+                                      Get.back();
+                                      Get.to(NewGameScreen(
+                                        gameMode: GameMode.ai,
+                                        speed: 7.0,
+                                        paddleType: widget.paddleType,
+                                      ));
+                                    },
+                                  ),
+                                  AppDialogButton(
+                                    buttonText: "EXIT",
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      onPressed: () async {
-                        if (gameIsFinished) {
-                          return;
-                        }
-                        xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
-                        ySpeed = turn == player1.name ? 1.2 : -1.2;
-                        showStartText = false;
-                        while (mounted) {
-                          ball.left += xSpeed;
-                          ball.top += ySpeed;
-                          if (ball.left > tableWidth - ballSize) {
-                            xSpeed = (-1) * (xSpeed.abs());
-                          } else if (ball.left <= 0) {
-                            xSpeed = xSpeed.abs();
-                          }
-                          if (ball.top > tableHeight - ballSize / 3) {
-                            player1.left = sWidth / 2 - playerRadius;
-                            player1.top = playerSize * 1.2;
-                            player2.left = sWidth / 2 - playerRadius;
-                            player2.top = sHeight - (playerSize * 2.5);
-                            ball.left = sWidth / 2 - ballRadius;
-                            ball.top = (sHeight / 2) - ballRadius - 50;
-                            setState(() {});
-                            nextRound(player1.name);
-                            break;
-                          } else if (ball.top <= 0 - ballSize * 2 / 3) {
-                            player1.left = sWidth / 2 - playerRadius;
-                            player1.top = playerSize * 1.2;
-                            player2.left = sWidth / 2 - playerRadius;
-                            player2.top = sHeight - (playerSize * 2.5);
-                            ball.left = sWidth / 2 - ballRadius;
-                            ball.top = (sHeight / 2) - ballRadius - 50;
-                            nextRound(player2.name);
-                            break;
-                          }
-
-                          doTheMathWork();
-                          await Future.delayed(const Duration(milliseconds: 1));
-                          if (mounted) {
-                            setState(() {});
-                          }
-                        }
-                      },
                     ),
-                  ),
-                ),
-              ),
+
               Visibility(
                 visible: isPaused,
                 child: Container(
@@ -795,52 +907,94 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   width: sWidth,
                   color: Colors.black.withOpacity(0.8),
                   child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "PAUSED",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(
-                                  fontSize: 36.sp,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white),
+                    child: Container(
+                      height: sHeight,
+                      width: sWidth,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 200),
+                      decoration: BoxDecoration(
+                          color: AppTheme.appBackgroundColor,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 15, 30, 40),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            customCentreText(
+                              inputText: "PAUSED",
+                              fontSize: 32,
+                              weight: FontWeight.w800,
+                              colorName: AppTheme.whiteColor,
+                            ),
+                            // Text(
+                            //   "PAUSED",
+                            //   style: Theme.of(context)
+                            //       .textTheme
+                            //       .labelMedium!
+                            //       .copyWith(
+                            //           fontSize: 36.sp,
+                            //           fontWeight: FontWeight.w900,
+                            //           color: Colors.white),
+                            // ),
+                            // SizedBox(
+                            //   height: 24.h,
+                            // ),
+                            AppDialogButton(
+                              buttonText: "RESUME",
+                              onPressed: () {
+                                setState(() {
+                                  xSpeed = temporaryXSpeed;
+                                  ySpeed = temporaryYSpeed;
+                                  isPaused = false;
+                                });
+                              },
+                            ),
+                            // SizedBox(
+                            //   height: 16.h,
+                            // ),
+                            // Button(
+                            //   child: Text("RESUME",
+                            //       style: Theme.of(context)
+                            //           .textTheme
+                            //           .labelMedium!
+                            //           .copyWith(fontSize: 18.sp)),
+                            //   onTap: () {
+                            //     setState(() {
+                            //       xSpeed = temporaryXSpeed;
+                            //       ySpeed = temporaryYSpeed;
+                            //       isPaused = false;
+                            //     });
+                            //   },
+                            // ),
+                            AppDialogButton(
+                              buttonText: "RESTART",
+                              onPressed: () {},
+                            ),
+                            // SizedBox(
+                            //   height: 16.h,
+                            // ),
+                            AppDialogButton(
+                              buttonText: "EXIT",
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                            // Button(
+                            //   child: Text(
+                            //     "QUIT",
+                            //     style: Theme.of(context)
+                            //         .textTheme
+                            //         .labelMedium!
+                            //         .copyWith(fontSize: 18.sp),
+                            //   ),
+                            //   onTap: () {
+                            //     Navigator.pop(context);
+                            //   },
+                            // )
+                          ],
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
-                        Button(
-                          child: Text("RESUME",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(fontSize: 18.sp)),
-                          onTap: () {
-                            setState(() {
-                              xSpeed = temporaryXSpeed;
-                              ySpeed = temporaryYSpeed;
-                              isPaused = false;
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Button(
-                          child: Text(
-                            "QUIT",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(fontSize: 18.sp),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ),
