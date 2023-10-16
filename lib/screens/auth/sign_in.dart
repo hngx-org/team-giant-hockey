@@ -1,82 +1,80 @@
-// signin_screen.dart
-import '../../controller/sign_in_controller.dart';
+import 'package:team_giant_hockey/widgets/size_config.dart';
+
 import '../../core/app_export.dart';
-// Import necessary packages and files
+import '../../widgets/signin_form_widget.dart';
 
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  SignInScreen({super.key});
+  SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(30),
-              height: 300,
+      backgroundColor: AppTheme.appBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: AppTheme.primaryColor,
+        title: Text(
+          'Sign In To Play',
+          style: GoogleFonts.abhayaLibre(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            color: AppTheme.whiteColor,
+          ),
+        ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(30),
+            height: 300,
+            width: double.infinity,
+            color: AppTheme.primaryColor,
+            child: SizedBox(
+              height: 227,
               width: double.infinity,
-              color: AppTheme.primaryColor,
-              child: SizedBox(
-                height: 257,
-                width: double.infinity,
-                child: Image.asset(
-                  ImageConstant.game_pad,
-                ),
-              ),
-            ),
-            Expanded(
-            child: Container(
-              color: Colors.black, // Set the background color to black
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // Email Field
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        controller: emailController,
-                        decoration: const InputDecoration(labelText: 'Email'),
-                      ),
-                    ),
-                    // Password Field
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        controller: passwordController,
-                        decoration: const InputDecoration(labelText: 'Password'),
-                        obscureText: true,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    // Sign-up button that calls AuthController's signUp method
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: AppButton(
-                        buttonText: 'Sign Up',
-                        onPressed: () {},
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Text('Already have an account?'),
-                        Text('Sign In'),
-                      ],
-                    ),
-                  ],
-                ),
+              child: Image.asset(
+                scale: 4,
+                ImageConstant.game_pad,
               ),
             ),
           ),
-          ],
-        ),
+          ClipPath(
+            clipper: ContainerCurve(),
+            child: Container(
+              height: getProportionateScreenHeight(100),
+              width: double.infinity,
+              color: AppTheme.primaryColor,
+            ),
+          ),
+          SignInFormWidget(),
+        ],
       ),
     );
+  }
+}
+
+class ContainerCurve extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    // path.lineTo(size.width* 0.25, size.height * 0.75);
+    path.quadraticBezierTo(
+      size.width *0.2,
+       size.height * 0.9,
+         size.width *0.6,
+         size.height * 0.2
+         );
+    path.lineTo(size.width , 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

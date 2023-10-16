@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 
-import '../themes/app_theme.dart';
+import '../../core/app_export.dart';
+
 
 class AppButton extends StatelessWidget {
   const AppButton(
@@ -32,10 +32,11 @@ class AppButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: TextStyle(
-            fontSize: 20,
+          style: GoogleFonts.abhayaLibre(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
             color: AppTheme.whiteColor,
-            fontWeight: FontWeight.w600,
           ),
         ),
       ),

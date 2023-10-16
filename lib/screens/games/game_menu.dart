@@ -1,9 +1,10 @@
+
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/controller/menu_controller.dart';
-import 'package:team_giant_hockey/core/utils/image_constants.dart';
-import 'package:team_giant_hockey/screens/games/game_screen.dart';
+import 'package:team_giant_hockey/core/app_export.dart';
 import 'package:team_giant_hockey/screens/settings/game_rule.dart';
 import 'package:team_giant_hockey/screens/settings/leaderboard.dart';
 import 'package:team_giant_hockey/screens/settings/player_mode.dart';
@@ -23,13 +24,20 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
   @override
   void initState() {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    if(FlameAudio.bgm.isPlaying){
+
+    } else {
+      FlameAudio.bgm.play('background_music1.mp3');
+    }
+    
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     final _menuController = Get.put(GameMenuController());
-    
+
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: AppTheme.appBackgroundColor,
@@ -69,19 +77,20 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                     return GestureDetector(
                       onTap: () {
                         if (index == 0) {
-                          Get.to(GameScreen());
+                          Get.to(PlayerModeScreen());
+                          // Get.to(GameWidget(game: MyGame()) );
                         } else if (index == 1) {
                           Get.to(GameRulesScreen());
                         } else if (index == 2) {
-                          Get.to(LeaderBoardScreen());
+                          Get.to(SignUpScreen());
                         } else if (index == 3) {
-                          Get.to(PlayerModeScreen());
+                          Get.to(LeaderBoardScreen());
                         } else if (index == 4) {
                           SystemNavigator.pop();
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 10),
                         child: customCentreText(
                           inputText: _menuController.menus[index],
                           fontSize: 32,

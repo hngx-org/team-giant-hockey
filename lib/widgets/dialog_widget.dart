@@ -4,7 +4,9 @@ import 'package:team_giant_hockey/themes/app_theme.dart';
 import 'package:team_giant_hockey/widgets/custom_text.dart';
 import 'package:team_giant_hockey/widgets/dialog_button.dart';
 
-showMyDialog(BuildContext context, Function() yesOnTap) {
+
+
+showMyDialog(BuildContext context, Function() restart, Function() play) {
   return showDialog<void>(
     context: context,
     // barrierDismissible: false, // user must tap button!
