@@ -64,6 +64,10 @@ dependencies:
   dashbook: ^0.1.13
   firebase_core: ^2.17.0
   firebase_auth: ^4.10.1
+  flutter_screenutil: ^5.9.0
+  shared_preferences: ^2.2.2
+  provider: ^6.0.5
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:

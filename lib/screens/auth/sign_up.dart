@@ -1,9 +1,6 @@
 import 'package:team_giant_hockey/widgets/size_config.dart';
-
-import '../../controller/sign_up_controller.dart';
 import '../../core/app_export.dart';
 import '../../widgets/signup_form_widget.dart';
-import 'sign_in.dart';
 
 class SignUpScreen extends StatelessWidget {
   // final TextEditingController fullNameController = TextEditingController();
@@ -16,6 +13,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
+      backgroundColor: AppTheme.appBackgroundColor
+      ,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -53,6 +52,14 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+           ClipPath(
+            clipper: ContainerCurve(),
+            child: Container(
+              height: getProportionateScreenHeight(100),
+              width: double.infinity,
+              color: AppTheme.primaryColor,
             ),
           ),
           SignUpFormWidget(),
