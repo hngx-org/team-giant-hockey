@@ -1,6 +1,7 @@
 import 'package:team_giant_hockey/widgets/size_config.dart';
 import '../../core/app_export.dart';
 import '../../widgets/signup_form_widget.dart';
+import 'sign_in.dart';
 
 class SignUpScreen extends StatelessWidget {
   // final TextEditingController fullNameController = TextEditingController();

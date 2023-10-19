@@ -11,12 +11,15 @@ import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
 
+import 'core/app_export.dart';
+import 'services/repository/authentication_repository/authentication_repository.dart';
+
 AppTheme appTheme = AppTheme();
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
-  // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   // runApp(GameWidget(game: MyGame()));
 //   runApp(
