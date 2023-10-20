@@ -22,18 +22,26 @@ class LeaderBoardScreen extends StatelessWidget {
             onTap: () {
               Get.back();
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_left_rounded,
-              size: 60,
+              size: 70,
               color: AppTheme.whiteColor,
             ),
           ),
-          title: customCentreText(
-            inputText: "LEADERBOARD",
-            fontSize: 32,
-            weight: FontWeight.w700,
-            colorName: AppTheme.whiteColor,
-          )),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Image.asset(
+                                ImageConstant.leaderboard,
+                                scale: 3.5,
+                              ),
+          ),
+          // customCentreText(
+          //   inputText: "LEADERBOARD",
+          //   fontSize: 32,
+          //   weight: FontWeight.w700,
+          //   colorName: AppTheme.whiteColor,
+          // ),
+          ),
       body: Column(
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [

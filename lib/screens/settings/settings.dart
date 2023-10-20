@@ -32,16 +32,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             child: const Icon(
               Icons.arrow_left_rounded,
-              size: 60,
+              size: 70,
               color: AppTheme.whiteColor,
             ),
           ),
-          title: customCentreText(
-            inputText: "SETTINGS",
-            fontSize: 32,
-            weight: FontWeight.w700,
-            colorName: AppTheme.whiteColor,
-          )),
+          title: Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Image.asset(
+                    ImageConstant.settings,
+                    scale: 3.5,
+                  ),
+                ),
+          // customCentreText(
+          //   inputText: "SETTINGS",
+          //   fontSize: 32,
+          //   weight: FontWeight.w700,
+          //   colorName: AppTheme.whiteColor,
+          // ),
+          ),
       body: SafeArea(
         child: Padding(
           padding:

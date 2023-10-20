@@ -22,10 +22,12 @@ void main() async {
   // Initialize FlameAudio
   FlameAudio.bgm.initialize();
 
-  runApp(MultiProvider(
-    providers: _providers,
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: _providers,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -45,7 +47,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color.fromARGB(255, 109, 109, 109),),
+              seedColor: const Color.fromARGB(255, 109, 109, 109),
+            ),
             useMaterial3: true,
           ),
           home: const GameMenuScreen(),
