@@ -1,6 +1,7 @@
 import 'package:team_giant_hockey/widgets/size_config.dart';
 import '../../core/app_export.dart';
 import '../../widgets/signup_form_widget.dart';
+import 'sign_in.dart';
 
 class SignUpScreen extends StatelessWidget {
   // final TextEditingController fullNameController = TextEditingController();
@@ -13,13 +14,13 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
-      backgroundColor: AppTheme.appBackgroundColor
-      ,
+      backgroundColor: AppTheme.appBackgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding:  EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
             height: getProportionateScreenHeight(314),
             width: double.infinity,
             color: AppTheme.primaryColor,
@@ -35,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
                   Text(
                     'Sign Up\nTo Play',
                     style: GoogleFonts.abhayaLibre(
-                      fontSize: 32,
+                      fontSize: 28,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.normal,
                       color: AppTheme.whiteColor,
@@ -43,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   Center(
                     child: SizedBox(
-                      height: getProportionateScreenHeight(169),
+                      height: getProportionateScreenHeight(160),
                       width: getProportionateScreenWidth(257),
                       child: Image.asset(
                         ImageConstant.game_pad,
@@ -54,7 +55,7 @@ class SignUpScreen extends StatelessWidget {
               ),
             ),
           ),
-           ClipPath(
+          ClipPath(
             clipper: ContainerCurve(),
             child: Container(
               height: getProportionateScreenHeight(100),

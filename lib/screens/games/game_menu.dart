@@ -1,4 +1,3 @@
-
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,12 +23,11 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
   @override
   void initState() {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    if(FlameAudio.bgm.isPlaying){
-
+    if (FlameAudio.bgm.isPlaying) {
     } else {
       FlameAudio.bgm.play('background_music1.mp3');
     }
-    
+
     super.initState();
   }
 
@@ -47,9 +45,9 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             Column(
               children: [
                 Image.asset(
@@ -62,6 +60,7 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                 ),
               ],
             ),
+
             Align(
               alignment: Alignment.centerRight,
               child: Image.asset(
@@ -69,6 +68,7 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                 scale: 4,
               ),
             ),
+
             Column(
               children: [
                 ...List.generate(
@@ -112,7 +112,7 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(SettingsScreen());
+                    Get.to(const SettingsScreen());
                   },
                   child: const Icon(
                     Icons.settings,

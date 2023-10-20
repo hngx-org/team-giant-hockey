@@ -68,6 +68,7 @@ dependencies:
   shared_preferences: ^2.2.2
   provider: ^6.0.5
   confetti: ^0.7.0
+  cloud_firestore: ^4.11.0
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +96,8 @@ flutter:
   assets:
     - assets/audio/background_music1.mp3
     - assets/audio/collision_sound.wav
+    - assets/audio/whistle.wav
+    - assets/audio/goal.wav
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
