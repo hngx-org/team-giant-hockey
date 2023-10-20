@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<List<DocumentSnapshot>> fetchLeaderboard() async {
+    final querySnapshot = await _firestore.collection('leaderboard').get();
+    return querySnapshot.docs;
+  }
+
 
   // Function to save game data
   Future<void> saveGameData(String userId, String userName, int score) async {
@@ -34,4 +39,7 @@ class FirestoreService {
       return null;
     }
   }
+
+
+  // Add more Firestore functions as needed
 }
