@@ -8,10 +8,7 @@ import '../../themes/app_theme.dart';
 import '../../widgets/custom_text.dart';
 
 class DifficultyLevelScreen extends StatefulWidget {
-  const DifficultyLevelScreen({
-    super.key,
-    required this.paddleType
-  });
+  const DifficultyLevelScreen({super.key, required this.paddleType});
   final String paddleType;
 
   @override
@@ -20,7 +17,7 @@ class DifficultyLevelScreen extends StatefulWidget {
 
 class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
   int selected = 0;
-  int puckNumber = 0;
+  // int puckNumber = 0;
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -54,92 +51,105 @@ class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: getProportionateScreenHeight(137),
+                height: getProportionateScreenHeight(40),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Image.asset(
+                  widget.paddleType,
+                  scale: 4,
+                ),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(40),
               ),
               SizedBox(
                 height: getProportionateScreenHeight(260),
                 child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      var data = difficultylevels[index];
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selected = index;
-                          });
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.only(
-                              left: getProportionateScreenWidth(5),
-                              right: getProportionateScreenWidth(22),
-                              top: getProportionateScreenHeight(5),
-                              bottom: getProportionateScreenHeight(5)),
-                          decoration: BoxDecoration(
-                              color: AppTheme.whiteColor,
-                              borderRadius: BorderRadius.circular(100)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              customCentreText(
-                                  inputText: data.title,
-                                  fontSize: 24,
-                                  weight: FontWeight.w700,
-                                  colorName: AppTheme.blackColor),
-                              Container(
-                                height: getProportionateScreenHeight(20),
-                                width: getProportionateScreenWidth(20),
-                                decoration: const BoxDecoration(
+                  itemBuilder: (context, index) {
+                    var data = difficultylevels[index];
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selected = index;
+                        });
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(5),
+                            right: getProportionateScreenWidth(22),
+                            top: getProportionateScreenHeight(5),
+                            bottom: getProportionateScreenHeight(5)),
+                        decoration: BoxDecoration(
+                            color: AppTheme.whiteColor,
+                            borderRadius: BorderRadius.circular(100)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            customCentreText(
+                                inputText: data.title,
+                                fontSize: 24,
+                                weight: FontWeight.w700,
+                                colorName: AppTheme.blackColor),
+                            Container(
+                              height: getProportionateScreenHeight(20),
+                              width: getProportionateScreenWidth(20),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppTheme.greyColor),
+                              child: Center(
+                                child: Container(
+                                  height: getProportionateScreenHeight(12),
+                                  width: getProportionateScreenWidth(12),
+                                  decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: AppTheme.greyColor),
-                                child: Center(
-                                  child: Container(
-                                    height: getProportionateScreenHeight(12),
-                                    width: getProportionateScreenWidth(12),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: selected == index
-                                            ? data.color
-                                            : AppTheme.greyColor),
+                                    color: selected == index
+                                        ? data.color
+                                        : AppTheme.greyColor,
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        height: getProportionateScreenHeight(47),
-                      );
-                    },
-                    itemCount: difficultylevels.length),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: getProportionateScreenHeight(47),
+                    );
+                  },
+                  itemCount: difficultylevels.length,
+                ),
               ),
               SizedBox(
                 height: getProportionateScreenHeight(70),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(46)),
+                  horizontal: getProportionateScreenWidth(40),
+                ),
                 child: GestureDetector(
                   onTap: () {
                     if (difficultylevels[selected].title == "Easy") {
-                      Get.to( NewGameScreen(
+                      Get.to(NewGameScreen(
                         gameMode: GameMode.ai,
                         speed: 3.0,
                         paddleType: widget.paddleType,
                       ));
                     } else if (difficultylevels[selected].title == "Medium") {
-                      Get.to( NewGameScreen(
+                      Get.to(NewGameScreen(
                         gameMode: GameMode.ai,
                         speed: 5.0,
                         paddleType: widget.paddleType,
                       ));
                     } else if (difficultylevels[selected].title == "Hard") {
-                      Get.to( NewGameScreen(
+                      Get.to(NewGameScreen(
                         gameMode: GameMode.ai,
                         speed: 7.0,
                         paddleType: widget.paddleType,
@@ -155,13 +165,17 @@ class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
                         color: AppTheme.whiteColor,
                       ),
                       Center(
-                        child: customCentreText(
-                          inputText: 'START',
-                          fontSize: 32,
-                          weight: FontWeight.w700,
-                          colorName: const Color(0xff66FF30),
-                        ),
-                      ),
+                          child: Image.asset(
+                        ImageConstant.start,
+                        scale: 4,
+                      )
+                          // customCentreText(
+                          //   inputText: 'START',
+                          //   fontSize: 32,
+                          //   weight: FontWeight.w700,
+                          //   colorName: const Color(0xff66FF30),
+                          // ),
+                          ),
                       const Icon(
                         Icons.arrow_left_rounded,
                         size: 60,
@@ -170,7 +184,17 @@ class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
                     ],
                   ),
                 ),
-              )
+              ),
+              // SizedBox(
+              //   height: getProportionateScreenHeight(40),
+              // ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Image.asset(
+              //     ImageConstant.bluePuck,
+              //     scale: 4,
+              //   ),
+              // ),
             ],
           ),
         ),

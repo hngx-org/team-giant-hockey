@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
@@ -37,63 +38,60 @@ class NewGameScreen extends StatefulWidget {
 class _NewGameScreenState extends State<NewGameScreen> {
   final ConfettiController confettiController = ConfettiController();
   bool isConfettiPlay = false;
+  int count = 3;
+  String countdownString = "3";
+  Timer? countdownTimer;
+
+  List<String> pucks = [
+    ImageConstant.greenPuck,
+    ImageConstant.bluePuck,
+    ImageConstant.yellowPuck,
+    ImageConstant.redPuck,
+  ];
 
   @override
   void initState() {
+    pucks.remove(widget.paddleType);
     confettiController.addListener(() {
       isConfettiPlay =
           confettiController.state == ConfettiControllerState.playing;
     });
 
     super.initState();
+
     final paddleColorProvider =
         Provider.of<PaddleColorProvider>(context, listen: false);
     if (widget.gameMode == GameMode.ai) {
       player1 = Player(
-        name: "Computer",
-        color: paddleColorProvider.player1Color,
-        playerImage: widget.paddleType == "green"
-            ? ImageConstant.yellowPuck
-            : ImageConstant.greenPuck,
-      );
+          name: "Computer",
+          color: paddleColorProvider.player1Color,
+          playerImage: pucks[1]);
 
       player2 = Player(
-        name: "Player",
-        color: paddleColorProvider.player2Color,
-        playerImage: widget.paddleType == "green"
-            ? ImageConstant.greenPuck
-            : ImageConstant.yellowPuck,
-      );
+          name: "Player",
+          color: paddleColorProvider.player2Color,
+          playerImage: widget.paddleType);
     } else if (widget.gameMode == GameMode.player2) {
       player1 = Player(
-        name: "Player 1",
-        color: paddleColorProvider.player1Color,
-        playerImage: widget.paddleType == "green"
-            ? ImageConstant.greenPuck
-            : ImageConstant.yellowPuck,
-      );
+          name: "Player 1",
+          color: paddleColorProvider.player1Color,
+          playerImage: pucks[1]);
 
       player2 = Player(
           name: "Player 2",
           color: paddleColorProvider.player2Color,
-          playerImage: widget.paddleType == "green"
-              ? ImageConstant.yellowPuck
-              : ImageConstant.greenPuck);
+          playerImage: widget.paddleType);
     } else {
       player1 = Player(
-        name: "Player 1",
-        color: paddleColorProvider.player1Color,
-        playerImage: widget.paddleType == "green"
-            ? ImageConstant.greenPuck
-            : ImageConstant.yellowPuck,
-      );
+          name: "Player 1",
+          color: paddleColorProvider.player1Color,
+          playerImage: pucks[1]);
 
       player2 = Player(
-          name: "Player 2",
-          color: paddleColorProvider.player2Color,
-          playerImage: widget.paddleType == "green"
-              ? ImageConstant.yellowPuck
-              : ImageConstant.greenPuck);
+        name: "Player 2",
+        color: paddleColorProvider.player2Color,
+        playerImage: widget.paddleType,
+      );
     }
 
     ball = Puck(
@@ -305,7 +303,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
   bool showStartText = true;
   late double distanceBall2P1;
   late double distanceBall2P2;
-  int gameEndsAt = 10;
+  int gameEndsAt = 5;
   Offset? previousPoint;
 
   void nextRound(String player) {
@@ -444,9 +442,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
     double verticalSpeed = verticalDistance / playerRadius;
 
     // Adjust the speed factors (make the ball move faster or slower)
-    double speedFactor = 3.0;
+    double speedFactor = widget.speed!;
     // Limit the maximum speed
-    double maxSpeed = 4.0;
+    double maxSpeed = widget.speed! + 1.5;
     horizontalSpeed = horizontalSpeed.clamp(-maxSpeed, maxSpeed);
     verticalSpeed = verticalSpeed.clamp(-maxSpeed, maxSpeed);
 
@@ -472,6 +470,73 @@ class _NewGameScreenState extends State<NewGameScreen> {
     // FlameAudio.play("collision_sound.wav");
   }
 
+  void startCountdown(double sWidth, double sHeight) {
+    print(count);
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (count >= 0) {
+        setState(() {
+          count--;
+          if (count == 0) {
+            FlameAudio.play("whistle.wav");
+            countdownString = "GO!";
+            // if (gameIsFinished) {
+            //   return;
+            // }
+
+            // showStartText = false;
+            // xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
+            // ySpeed = turn == player1.name ? 1.2 : -1.2;
+
+            // while (mounted) {
+            //   ball.left += xSpeed;
+            //   ball.top += ySpeed;
+            //   if (ball.left > tableWidth - ballSize) {
+            //     xSpeed = (-1) * (xSpeed.abs());
+            //   } else if (ball.left <= 0) {
+            //     xSpeed = xSpeed.abs();
+            //   }
+            //   if (ball.top > tableHeight - ballSize / 3) {
+            //     FlameAudio.play("goal.wav");
+            //     player1.left = sWidth / 2 - playerRadius;
+            //     player1.top = playerSize * 1.2;
+            //     player2.left = sWidth / 2 - playerRadius;
+            //     player2.top = sHeight - (playerSize * 2.5);
+            //     ball.left = sWidth / 2 - ballRadius;
+            //     ball.top = (sHeight / 2) - ballRadius - 50;
+            //     setState(() {});
+            //     nextRound(player1.name);
+            //     break;
+            //   } else if (ball.top <= 0 - ballSize * 2 / 3) {
+            //     FlameAudio.play("goal.wav");
+            //     player1.left = sWidth / 2 - playerRadius;
+            //     player1.top = playerSize * 1.2;
+            //     player2.left = sWidth / 2 - playerRadius;
+            //     player2.top = sHeight - (playerSize * 2.5);
+            //     ball.left = sWidth / 2 - ballRadius;
+            //     ball.top = (sHeight / 2) - ballRadius - 50;
+
+            //     nextRound(player2.name);
+            //     break;
+            //   }
+
+            //   doTheMathWork();
+            //   // await Future.delayed(const Duration(milliseconds: 1));
+            //   if (mounted) {
+            //     setState(() {});
+            //   }
+            // }
+          } else {
+            countdownString = count.toString();
+          }
+          print(count);
+        });
+      } else if (count == 0) {
+        print(countdownString);
+        timer.cancel();
+      }
+    });
+  }
+
   bool isPaused = false;
 
   @override
@@ -481,6 +546,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
     SizeConfig.init(context);
     double sWidth = MediaQuery.of(context).size.width;
     double sHeight = MediaQuery.of(context).size.height;
+    // showStartText = false;
+    // startCountdown(sWidth, sHeight);
+
     if (!gameIsStarted) {
       player1.score = 0;
       player2.score = 0;
@@ -645,6 +713,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                 right: 24.w,
                 child: Column(
                   children: [
+                    //Player 1 score text display
                     RotatedBox(
                       quarterTurns: 1,
                       child: Text(
@@ -656,6 +725,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                       ),
                     ),
                     SizedBox(height: 53.h),
+
+                    //Display pause button
                     Visibility(
                       visible: (xSpeed != 0 && ySpeed != 0),
                       maintainAnimation: true,
@@ -683,6 +754,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                       ),
                     ),
                     SizedBox(height: 51.h),
+
+                    //Player 2 score display
                     RotatedBox(
                       quarterTurns: 1,
                       child: Text(
@@ -697,7 +770,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   ],
                 ),
               ),
-              !gameIsFinished
+              !gameIsFinished //Display game puck when the game is still on
                   ? AnimatedPositioned(
                       duration: const Duration(milliseconds: 15),
                       left: ball.left,
@@ -707,81 +780,110 @@ class _NewGameScreenState extends State<NewGameScreen> {
                         scale: 4,
                       ))
                   : const SizedBox.shrink(),
-              !gameIsFinished
+              !gameIsFinished //Display the tap to start text button then the game counter
                   ? Positioned(
                       width: textStartWidth,
                       height: textStartHeight,
                       left: textStartLeft,
                       top: textStartTop,
                       child: Center(
-                        child: Visibility(
-                          visible: showStartText,
-                          child: TextButton(
-                            style: Theme.of(context)
-                                .textButtonTheme
-                                .style
-                                ?.copyWith(
-                                  backgroundColor:
-                                      const MaterialStatePropertyAll(
-                                    Colors.white,
-                                  ),
+                          child:
+                              // showStartText
+                              //     ?
+                              Visibility(
+                        visible: showStartText,
+                        child: TextButton(
+                          style: Theme.of(context)
+                              .textButtonTheme
+                              .style
+                              ?.copyWith(
+                                backgroundColor: const MaterialStatePropertyAll(
+                                  Colors.white,
                                 ),
-                            child: RotatedBox(
-                              quarterTurns: turn == player1.name ? 2 : 0,
-                              child: customCentreText(
-                                inputText: textStart,
-                                fontSize: textStartFontSize,
-                                weight: FontWeight.w800,
-                                colorName: AppTheme.whiteColor,
                               ),
+                          child: RotatedBox(
+                            quarterTurns: turn == player1.name ? 2 : 0,
+                            child: customCentreText(
+                              inputText: textStart,
+                              fontSize: textStartFontSize,
+                              weight: FontWeight.w800,
+                              colorName: AppTheme.whiteColor,
                             ),
-                            onPressed: () async {
-                              if (gameIsFinished) {
-                                return;
-                              }
-                              xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
-                              ySpeed = turn == player1.name ? 1.2 : -1.2;
-                              showStartText = false;
-                              while (mounted) {
-                                ball.left += xSpeed;
-                                ball.top += ySpeed;
-                                if (ball.left > tableWidth - ballSize) {
-                                  xSpeed = (-1) * (xSpeed.abs());
-                                } else if (ball.left <= 0) {
-                                  xSpeed = xSpeed.abs();
-                                }
-                                if (ball.top > tableHeight - ballSize / 3) {
-                                  player1.left = sWidth / 2 - playerRadius;
-                                  player1.top = playerSize * 1.2;
-                                  player2.left = sWidth / 2 - playerRadius;
-                                  player2.top = sHeight - (playerSize * 2.5);
-                                  ball.left = sWidth / 2 - ballRadius;
-                                  ball.top = (sHeight / 2) - ballRadius - 50;
-                                  setState(() {});
-                                  nextRound(player1.name);
-                                  break;
-                                } else if (ball.top <= 0 - ballSize * 2 / 3) {
-                                  player1.left = sWidth / 2 - playerRadius;
-                                  player1.top = playerSize * 1.2;
-                                  player2.left = sWidth / 2 - playerRadius;
-                                  player2.top = sHeight - (playerSize * 2.5);
-                                  ball.left = sWidth / 2 - ballRadius;
-                                  ball.top = (sHeight / 2) - ballRadius - 50;
-                                  nextRound(player2.name);
-                                  break;
-                                }
-
-                                doTheMathWork();
-                                await Future.delayed(
-                                    const Duration(milliseconds: 1));
-                                if (mounted) {
-                                  setState(() {});
-                                }
-                              }
-                            },
                           ),
+                          onPressed: () async {
+                            if (gameIsFinished) {
+                              return;
+                            }
+
+                            showStartText = false;
+                            // setState(() {
+                            //   countdownString = "3";
+                            //   count = 3;
+                            // });
+
+                            // await Future.delayed(
+                            //   const Duration(seconds: 3),
+                            // );
+                            xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
+                            ySpeed = turn == player1.name ? 1.2 : -1.2;
+
+                            while (mounted) {
+                              ball.left += xSpeed;
+                              ball.top += ySpeed;
+                              if (ball.left > tableWidth - ballSize) {
+                                xSpeed = (-1) * (xSpeed.abs());
+                              } else if (ball.left <= 0) {
+                                xSpeed = xSpeed.abs();
+                              }
+                              if (ball.top > tableHeight - ballSize / 3) {
+                                FlameAudio.play("goal.wav");
+                                player1.left = sWidth / 2 - playerRadius;
+                                player1.top = playerSize * 1.2;
+                                player2.left = sWidth / 2 - playerRadius;
+                                player2.top = sHeight - (playerSize * 2.5);
+                                ball.left = sWidth / 2 - ballRadius;
+                                ball.top = (sHeight / 2) - ballRadius - 50;
+                                setState(() {});
+                                nextRound(player1.name);
+                                break;
+                              } else if (ball.top <= 0 - ballSize * 2 / 3) {
+                                FlameAudio.play("goal.wav");
+                                player1.left = sWidth / 2 - playerRadius;
+                                player1.top = playerSize * 1.2;
+                                player2.left = sWidth / 2 - playerRadius;
+                                player2.top = sHeight - (playerSize * 2.5);
+                                ball.left = sWidth / 2 - ballRadius;
+                                ball.top = (sHeight / 2) - ballRadius - 50;
+
+                                nextRound(player2.name);
+                                break;
+                              }
+
+                              doTheMathWork();
+                              await Future.delayed(
+                                  const Duration(milliseconds: 1));
+                              if (mounted) {
+                                setState(() {});
+                              }
+                            }
+                          },
                         ),
-                      ),
+                      )
+                          // : count == -1
+                          //     ? const SizedBox()
+                          //     : AnimatedSwitcher(
+                          //         duration: const Duration(seconds: 1),
+                          //         child: Text(
+                          //           countdownString.toString(),
+                          //           key: ValueKey<int>(count),
+                          //           style: GoogleFonts.abhayaLibre(
+                          //             fontSize: 75,
+                          //             fontWeight: FontWeight.w800,
+                          //             color: AppTheme.whiteColor,
+                          //           ),
+                          //         ),
+                          //       ),
+                          ),
                     )
                   : Visibility(
                       visible: true,
@@ -793,34 +895,47 @@ class _NewGameScreenState extends State<NewGameScreen> {
                           child: Container(
                             height: sHeight,
                             width: sWidth,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 50,
-                              vertical: 250,
+                            margin: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(50),
+                              vertical: getProportionateScreenHeight(260),
                             ),
                             decoration: BoxDecoration(
                                 color: AppTheme.appBackgroundColor,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(30, 15, 30, 40),
+                              padding: EdgeInsets.fromLTRB(
+                                getProportionateScreenWidth(30),
+                                15,
+                                getProportionateScreenWidth(30),
+                                40,
+                              ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  customCentreText(
-                                    inputText: textStart,
-                                    fontSize: 32,
-                                    weight: FontWeight.w800,
-                                    colorName: AppTheme.whiteColor,
-                                  ),
+                                  // customCentreText(
+                                  //     inputText: textStart,
+                                  //     fontSize: 30,
+                                  //     weight: FontWeight.bold,
+                                  //     colorName: AppTheme.whiteColor),
+                                  textStart == "Player 2 Wins" ||
+                                          textStart == "Player Wins"
+                                      ? Image.asset(
+                                          ImageConstant.youWin,
+                                          scale: 4,
+                                        )
+                                      : Image.asset(
+                                          ImageConstant.youLose,
+                                          scale: 4,
+                                        ),
                                   AppDialogButton(
                                     buttonText: "REPLAY",
                                     onPressed: () {
                                       Get.back();
                                       Get.to(NewGameScreen(
-                                        gameMode: GameMode.ai,
-                                        speed: 7.0,
+                                        gameMode: widget.gameMode,
+                                        speed: widget.speed,
                                         paddleType: widget.paddleType,
                                       ));
                                     },
@@ -849,22 +964,30 @@ class _NewGameScreenState extends State<NewGameScreen> {
                     child: Container(
                       height: sHeight,
                       width: sWidth,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 200),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(50),
+                        vertical: getProportionateScreenHeight(210),
+                      ),
                       decoration: BoxDecoration(
-                          color: AppTheme.appBackgroundColor,
-                          borderRadius: BorderRadius.circular(20)),
+                        color: AppTheme.appBackgroundColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 15, 30, 40),
+                        padding: EdgeInsets.fromLTRB(
+                            getProportionateScreenWidth(30),
+                            15,
+                            getProportionateScreenWidth(30),
+                            40),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            customCentreText(
-                              inputText: "PAUSED",
-                              fontSize: 32,
-                              weight: FontWeight.w800,
-                              colorName: AppTheme.whiteColor,
+                            Image.asset(
+                              ImageConstant.paused,
+                              scale: 4,
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             AppDialogButton(
                               buttonText: "RESUME",
@@ -876,13 +999,23 @@ class _NewGameScreenState extends State<NewGameScreen> {
                                 });
                               },
                             ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             AppDialogButton(
                               buttonText: "RESTART",
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.back();
+                                Get.to(NewGameScreen(
+                                  gameMode: widget.gameMode,
+                                  speed: widget.speed,
+                                  paddleType: widget.paddleType,
+                                ));
+                              },
                             ),
-                            // SizedBox(
-                            //   height: 16.h,
-                            // ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             AppDialogButton(
                               buttonText: "EXIT",
                               onPressed: () {
@@ -913,5 +1046,11 @@ class _NewGameScreenState extends State<NewGameScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    countdownTimer?.cancel();
+    super.dispose();
   }
 }
