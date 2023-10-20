@@ -33,18 +33,22 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
             },
             child: const Icon(
               Icons.arrow_left_rounded,
-              size: 60,
+              size: 70,
               color: AppTheme.whiteColor,
             ),
           ),
           title: Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: customCentreText(
-              inputText: "PLAYER MODE",
-              fontSize: 32,
-              weight: FontWeight.w700,
-              colorName: AppTheme.whiteColor,
+            child: Image.asset(
+              ImageConstant.playerMode,
+              scale: 3.5,
             ),
+            // customCentreText(
+            //   inputText: "PLAYER MODE",
+            //   fontSize: 32,
+            //   weight: FontWeight.w700,
+            //   colorName: AppTheme.whiteColor,
+            // ),
           )),
       body: SafeArea(
         child: Padding(
@@ -200,6 +204,7 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
                     Get.to(NewGameScreen(
                       gameMode: GameMode.player2,
                       paddleType: pucks[puckNumber],
+                      speed: 6,
                     ));
                   }
                   print(
@@ -212,16 +217,7 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
                       ? ImageConstant.start
                       : ImageConstant.next,
                   scale: 4,
-                )
-                    // customCentreText(
-                    //   inputText: playerList[selected].title == "Double Player"
-                    //       ? "START"
-                    //       : 'NEXT',
-                    //   fontSize: 32,
-                    //   weight: FontWeight.w700,
-                    //   colorName: const Color(0xff66FF30),
-                    // ),
-                    ),
+                )),
               )
             ],
           ),
@@ -252,7 +248,8 @@ List<PlayerModel> playerList = [
   PlayerModel(
       title: 'Double Player', icon: Icons.person_2, color: AppTheme.redColor),
   PlayerModel(
-      title: 'Play Online',
-      icon: Icons.person_add,
-      color: AppTheme.yellowColor),
+    title: 'Play Online',
+    icon: Icons.person_add,
+    color: AppTheme.yellowColor,
+  ),
 ];
