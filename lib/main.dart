@@ -1,26 +1,19 @@
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:team_giant_hockey/new_game/game_provider.dart';
 import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
-import 'package:team_giant_hockey/themes/app_theme.dart';
-
 import 'core/app_export.dart';
-import 'firebase.config.dart';
-import 'services/repository/authentication_repository/authentication_repository.dart';
+
 
 AppTheme appTheme = AppTheme();
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
-  // await FirebaseService.initialize(); // Initialize Firebase
+  await FirebaseService.initialize(); // Initialize Firebase
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   // runApp(GameWidget(game: MyGame()));
