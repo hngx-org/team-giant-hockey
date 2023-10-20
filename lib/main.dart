@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                 seedColor: const Color.fromARGB(255, 109, 109, 109),),
             useMaterial3: true,
           ),
-          home: GameMenuScreen(),
+          home: const GameMenuScreen(),
         );
       },
     );
