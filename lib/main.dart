@@ -55,12 +55,10 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 109, 109, 109)),
               useMaterial3: true,
             ),
-            home: 
-            // CountdownScreen()
-            GameMenuScreen(),
+            home: GameMenuScreen(),
             );
       },
     );
@@ -76,48 +74,3 @@ final _providers = <SingleChildWidget>[
       create: (context) => PaddleColorProvider()..initialize()),
 ];
 
-// class CountdownScreen extends StatefulWidget {
-//   @override
-//   _CountdownScreenState createState() => _CountdownScreenState();
-// }
-
-// class _CountdownScreenState extends State<CountdownScreen> {
-//   int count = 3;
-//   String countdownString = "3";
-//   Timer? countdownTimer;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     startCountdown();
-//   }
-
-
-
-//   @override
-//   void dispose() {
-//     countdownTimer?.cancel();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Game Countdown'),
-//       ),
-//       body: count == -1
-//           ? const SizedBox()
-//           : Center(
-//               child: AnimatedSwitcher(
-//                 duration: Duration(seconds: 1),
-//                 child: Text(
-//                   countdownString.toString(),
-//                   key: ValueKey<int>(count),
-//                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//             ),
-//     );
-//   }
-// }
