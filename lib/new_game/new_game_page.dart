@@ -52,10 +52,11 @@ class _NewGameScreenState extends State<NewGameScreen> {
   @override
   void initState() {
     pucks.remove(widget.paddleType);
-    confettiController.addListener(() {
-      isConfettiPlay =
-          confettiController.state == ConfettiControllerState.playing;
-    });
+    confettiController.play();
+    // confettiController.addListener(() {
+    //   isConfettiPlay =
+    //       confettiController.state == ConfettiControllerState.playing;
+    // });
 
     super.initState();
 
@@ -470,72 +471,72 @@ class _NewGameScreenState extends State<NewGameScreen> {
     // FlameAudio.play("collision_sound.wav");
   }
 
-  void startCountdown(double sWidth, double sHeight) {
-    print(count);
-    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (count >= 0) {
-        setState(() {
-          count--;
-          if (count == 0) {
-            FlameAudio.play("whistle.wav");
-            countdownString = "GO!";
-            // if (gameIsFinished) {
-            //   return;
-            // }
+  // void startCountdown(double sWidth, double sHeight) {
+  //   print(count);
+  //   countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     if (count >= 0) {
+  //       setState(() {
+  //         count--;
+  //         if (count == 0) {
+  //           FlameAudio.play("whistle.wav");
+  //           countdownString = "GO!";
+  // if (gameIsFinished) {
+  //   return;
+  // }
 
-            // showStartText = false;
-            // xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
-            // ySpeed = turn == player1.name ? 1.2 : -1.2;
+  // showStartText = false;
+  // xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
+  // ySpeed = turn == player1.name ? 1.2 : -1.2;
 
-            // while (mounted) {
-            //   ball.left += xSpeed;
-            //   ball.top += ySpeed;
-            //   if (ball.left > tableWidth - ballSize) {
-            //     xSpeed = (-1) * (xSpeed.abs());
-            //   } else if (ball.left <= 0) {
-            //     xSpeed = xSpeed.abs();
-            //   }
-            //   if (ball.top > tableHeight - ballSize / 3) {
-            //     FlameAudio.play("goal.wav");
-            //     player1.left = sWidth / 2 - playerRadius;
-            //     player1.top = playerSize * 1.2;
-            //     player2.left = sWidth / 2 - playerRadius;
-            //     player2.top = sHeight - (playerSize * 2.5);
-            //     ball.left = sWidth / 2 - ballRadius;
-            //     ball.top = (sHeight / 2) - ballRadius - 50;
-            //     setState(() {});
-            //     nextRound(player1.name);
-            //     break;
-            //   } else if (ball.top <= 0 - ballSize * 2 / 3) {
-            //     FlameAudio.play("goal.wav");
-            //     player1.left = sWidth / 2 - playerRadius;
-            //     player1.top = playerSize * 1.2;
-            //     player2.left = sWidth / 2 - playerRadius;
-            //     player2.top = sHeight - (playerSize * 2.5);
-            //     ball.left = sWidth / 2 - ballRadius;
-            //     ball.top = (sHeight / 2) - ballRadius - 50;
+  // while (mounted) {
+  //   ball.left += xSpeed;
+  //   ball.top += ySpeed;
+  //   if (ball.left > tableWidth - ballSize) {
+  //     xSpeed = (-1) * (xSpeed.abs());
+  //   } else if (ball.left <= 0) {
+  //     xSpeed = xSpeed.abs();
+  //   }
+  //   if (ball.top > tableHeight - ballSize / 3) {
+  //     FlameAudio.play("goal.wav");
+  //     player1.left = sWidth / 2 - playerRadius;
+  //     player1.top = playerSize * 1.2;
+  //     player2.left = sWidth / 2 - playerRadius;
+  //     player2.top = sHeight - (playerSize * 2.5);
+  //     ball.left = sWidth / 2 - ballRadius;
+  //     ball.top = (sHeight / 2) - ballRadius - 50;
+  //     setState(() {});
+  //     nextRound(player1.name);
+  //     break;
+  //   } else if (ball.top <= 0 - ballSize * 2 / 3) {
+  //     FlameAudio.play("goal.wav");
+  //     player1.left = sWidth / 2 - playerRadius;
+  //     player1.top = playerSize * 1.2;
+  //     player2.left = sWidth / 2 - playerRadius;
+  //     player2.top = sHeight - (playerSize * 2.5);
+  //     ball.left = sWidth / 2 - ballRadius;
+  //     ball.top = (sHeight / 2) - ballRadius - 50;
 
-            //     nextRound(player2.name);
-            //     break;
-            //   }
+  //     nextRound(player2.name);
+  //     break;
+  //   }
 
-            //   doTheMathWork();
-            //   // await Future.delayed(const Duration(milliseconds: 1));
-            //   if (mounted) {
-            //     setState(() {});
-            //   }
-            // }
-          } else {
-            countdownString = count.toString();
-          }
-          print(count);
-        });
-      } else if (count == 0) {
-        print(countdownString);
-        timer.cancel();
-      }
-    });
-  }
+  //   doTheMathWork();
+  //   // await Future.delayed(const Duration(milliseconds: 1));
+  //   if (mounted) {
+  //     setState(() {});
+  //   }
+  //           // }
+  //         } else {
+  //           countdownString = count.toString();
+  //         }
+  //         print(count);
+  //       });
+  //     } else if (count == 0) {
+  //       print(countdownString);
+  //       timer.cancel();
+  //     }
+  //   });
+  // }
 
   bool isPaused = false;
 
@@ -816,14 +817,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
                             }
 
                             showStartText = false;
-                            // setState(() {
-                            //   countdownString = "3";
-                            //   count = 3;
-                            // });
-
-                            // await Future.delayed(
-                            //   const Duration(seconds: 3),
-                            // );
                             xSpeed = math.Random().nextBool() ? 1.2 : -1.2;
                             ySpeed = turn == player1.name ? 1.2 : -1.2;
 
@@ -868,89 +861,101 @@ class _NewGameScreenState extends State<NewGameScreen> {
                             }
                           },
                         ),
-                      )
-                          // : count == -1
-                          //     ? const SizedBox()
-                          //     : AnimatedSwitcher(
-                          //         duration: const Duration(seconds: 1),
-                          //         child: Text(
-                          //           countdownString.toString(),
-                          //           key: ValueKey<int>(count),
-                          //           style: GoogleFonts.abhayaLibre(
-                          //             fontSize: 75,
-                          //             fontWeight: FontWeight.w800,
-                          //             color: AppTheme.whiteColor,
-                          //           ),
-                          //         ),
-                          //       ),
-                          ),
+                      )),
                     )
                   : Visibility(
                       visible: true,
-                      child: Container(
-                        height: sHeight,
-                        width: sWidth,
-                        color: Colors.black.withOpacity(0.8),
-                        child: Center(
-                          child: Container(
+                      child: Stack(
+                        children: [
+                          Container(
                             height: sHeight,
                             width: sWidth,
-                            margin: EdgeInsets.symmetric(
-                              horizontal: getProportionateScreenWidth(50),
-                              vertical: getProportionateScreenHeight(260),
-                            ),
-                            decoration: BoxDecoration(
-                                color: AppTheme.appBackgroundColor,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                getProportionateScreenWidth(30),
-                                15,
-                                getProportionateScreenWidth(30),
-                                40,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // customCentreText(
-                                  //     inputText: textStart,
-                                  //     fontSize: 30,
-                                  //     weight: FontWeight.bold,
-                                  //     colorName: AppTheme.whiteColor),
-                                  textStart == "Player 2 Wins" ||
-                                          textStart == "Player Wins"
-                                      ? Image.asset(
-                                          ImageConstant.youWin,
-                                          scale: 4,
-                                        )
-                                      : Image.asset(
-                                          ImageConstant.youLose,
-                                          scale: 4,
-                                        ),
-                                  AppDialogButton(
-                                    buttonText: "REPLAY",
-                                    onPressed: () {
-                                      Get.back();
-                                      Get.to(NewGameScreen(
-                                        gameMode: widget.gameMode,
-                                        speed: widget.speed,
-                                        paddleType: widget.paddleType,
-                                      ));
-                                    },
+                            color: Colors.black.withOpacity(0.8),
+                            child: Center(
+                              child: Container(
+                                height: sHeight,
+                                width: sWidth,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(50),
+                                  vertical: getProportionateScreenHeight(260),
+                                ),
+                                decoration: BoxDecoration(
+                                    color: AppTheme.appBackgroundColor,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    getProportionateScreenWidth(30),
+                                    15,
+                                    getProportionateScreenWidth(30),
+                                    40,
                                   ),
-                                  AppDialogButton(
-                                    buttonText: "EXIT",
-                                    onPressed: () {
-                                      Get.back();
-                                    },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // customCentreText(
+                                      //     inputText: textStart,
+                                      //     fontSize: 30,
+                                      //     weight: FontWeight.bold,
+                                      //     colorName: AppTheme.whiteColor),
+                                      textStart == "Player 2 Wins" ||
+                                              textStart == "Player Wins"
+                                          ? Image.asset(
+                                              ImageConstant.youWin,
+                                              scale: 4,
+                                            )
+                                          : Image.asset(
+                                              ImageConstant.youLose,
+                                              scale: 4,
+                                            ),
+                                      AppDialogButton(
+                                        buttonText: "REPLAY",
+                                        onPressed: () {
+                                          Get.back();
+                                          Get.to(NewGameScreen(
+                                            gameMode: widget.gameMode,
+                                            speed: widget.speed,
+                                            paddleType: widget.paddleType,
+                                          ));
+                                        },
+                                      ),
+                                      AppDialogButton(
+                                        buttonText: "EXIT",
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          textStart == "Player 2 Wins" ||
+                                  textStart == "Player Wins"
+                              ? Positioned(
+                                  left: (sWidth - goalWidth) / 2, // Centered
+                                  top: 0,
+                                  child: ConfettiWidget(
+                                    // maxBlastForce: 100,
+                                    blastDirectionality: BlastDirectionality
+                                        .explosive, // don't specify a direction, blast randomly
+                                    shouldLoop:
+                                        true, // start again as soon as the animation is finished
+                                    colors: const [
+                                      Color.fromRGBO(255, 0, 0, 1),
+                                      Color.fromARGB(255, 255, 217, 0),
+                                      Color.fromARGB(255, 0, 0, 255),
+                                      Color.fromARGB(255, 0, 255, 0),
+                                      AppTheme.whiteColor,
+                                      Colors.purple
+                                    ],
+                                    confettiController: confettiController,
+                                  ),
+                                )
+                              : const SizedBox()
+                        ],
                       ),
                     ),
 
@@ -1006,7 +1011,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                               buttonText: "RESTART",
                               onPressed: () {
                                 Get.back();
-                                Get.to(NewGameScreen(
+                                Get.to(
+                                  NewGameScreen(
                                   gameMode: widget.gameMode,
                                   speed: widget.speed,
                                   paddleType: widget.paddleType,
@@ -1029,18 +1035,6 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   ),
                 ),
               ),
-              !gameIsFinished
-                  ? const SizedBox()
-                  : Positioned(
-                      left: (sWidth - goalWidth) / 2, // Centered
-                      top: 0,
-                      child: ConfettiWidget(
-                        numberOfParticles: 20,
-                        maxBlastForce: 100,
-                        confettiController: confettiController,
-                        shouldLoop: true,
-                      ),
-                    )
             ],
           ),
         ),
@@ -1051,6 +1045,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
   @override
   void dispose() {
     countdownTimer?.cancel();
+    confettiController.dispose();
     super.dispose();
   }
 }

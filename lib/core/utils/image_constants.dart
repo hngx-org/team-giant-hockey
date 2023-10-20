@@ -15,6 +15,12 @@ class ImageConstant {
   static const String youLose = "assets/images/you_lose.png";
   static const String youWin = "assets/images/you_win.png";
 
+  static const String settings = "assets/images/settings.png";
+  static const String playerMode = "assets/images/player_mode.png";
+  static const String leaderboard = "assets/images/leaderboard.png";
+  static const String gameRules = "assets/images/game_rules.png";
+  static const String difficulty = "assets/images/difficulty.png";
+
   static const String paused = "assets/images/paused.png";
   static const String start = "assets/images/start.png";
   static const String next = "assets/images/next.png";
