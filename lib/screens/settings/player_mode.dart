@@ -53,7 +53,7 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: getProportionateScreenHeight(137),
+                height: getProportionateScreenHeight(80),
               ),
               SizedBox(
                 height: getProportionateScreenHeight(260),
@@ -142,18 +142,25 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
                 ),
               ),
               SizedBox(
-                height: getProportionateScreenHeight(36),
+                height: getProportionateScreenHeight(26),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(24)),
+                  horizontal: getProportionateScreenWidth(24),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
+                          if (puckNumber > 0) {
+                            puckNumber = puckNumber - 1;
+                            print(puckNumber);
+                            print(pucks[puckNumber]);
+                          }
+
+                          // puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
                         });
                       },
                       child: Icon(
@@ -165,7 +172,13 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
+                          if (puckNumber < 3) {
+                            puckNumber = puckNumber + 1;
+                            print(puckNumber);
+                            print(pucks[puckNumber]);
+                          }
+
+                          // puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
                         });
                       },
                       child: Icon(
@@ -181,24 +194,34 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
                 onTap: () {
                   if (playerList[selected].title == "Single Player") {
                     Get.to(DifficultyLevelScreen(
-                      paddleType: puckNumber == 0 ? "green": "yellow",
+                      paddleType: pucks[puckNumber],
                     ));
                   } else if (playerList[selected].title == "Double Player") {
-                    Get.to( NewGameScreen(
+                    Get.to(NewGameScreen(
                       gameMode: GameMode.player2,
-                      paddleType: puckNumber == 0 ? "green": "yellow",
+                      paddleType: pucks[puckNumber],
                     ));
                   }
-                  print(puckNumber == 0 ? "green": "yellow");
+                  print(
+                    pucks[puckNumber],
+                  );
                 },
                 child: Center(
-                  child: customCentreText(
-                    inputText: 'NEXT',
-                    fontSize: 32,
-                    weight: FontWeight.w700,
-                    colorName: const Color(0xff66FF30),
-                  ),
-                ),
+                    child: Image.asset(
+                  playerList[selected].title == "Double Player"
+                      ? ImageConstant.start
+                      : ImageConstant.next,
+                  scale: 4,
+                )
+                    // customCentreText(
+                    //   inputText: playerList[selected].title == "Double Player"
+                    //       ? "START"
+                    //       : 'NEXT',
+                    //   fontSize: 32,
+                    //   weight: FontWeight.w700,
+                    //   colorName: const Color(0xff66FF30),
+                    // ),
+                    ),
               )
             ],
           ),
@@ -210,7 +233,9 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
 
 List<String> pucks = [
   ImageConstant.greenPuck,
+  ImageConstant.bluePuck,
   ImageConstant.yellowPuck,
+  ImageConstant.redPuck,
 ];
 
 class PlayerModel {

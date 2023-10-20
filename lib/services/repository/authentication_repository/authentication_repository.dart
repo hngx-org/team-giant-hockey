@@ -20,11 +20,11 @@ class AuthenticationRepository extends GetxController {
   }
 
   _setInitialScreen(User? user) {
-    if (user == null) {
-      Get.offAll(() => SignUpScreen());
-    } else {
-      Get.offAll(() => const GameMenuScreen());
-    }
+    // if (user == null) {
+    //   Get.offAll(() => SignUpScreen());
+    // } else {
+    //   Get.offAll(() => const GameMenuScreen());
+    // }
   }
 
   Future<void> createUserWithEmailandPassword(

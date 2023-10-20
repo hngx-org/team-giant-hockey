@@ -13,8 +13,9 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
-  await FirebaseService.initialize(); // Initialize Firebase
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
+  // await FirebaseService.initialize(); // Initialize Firebase
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   // runApp(GameWidget(game: MyGame()));
 //   runApp(
@@ -44,13 +45,15 @@ class MyApp extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return GetMaterialApp(
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            home: GameMenuScreen());
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color.fromARGB(255, 109, 109, 109),),
+            useMaterial3: true,
+          ),
+          home: const GameMenuScreen(),
+        );
       },
     );
   }

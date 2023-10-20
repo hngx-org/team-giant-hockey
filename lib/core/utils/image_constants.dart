@@ -9,8 +9,15 @@ class ImageConstant {
   static const String yellowPuck = "assets/images/puck_yellow.png";
   static const String greenPuck = "assets/images/puck_green.png";
   static const String gamePuck = "assets/images/game_puck.png";
+  static const String redPuck = "assets/images/puck_red.png";
+  static const String bluePuck = "assets/images/puck_blue.png";
   static const String hockeyPitch = "assets/images/hockey_pitch.png";
+  static const String youLose = "assets/images/you_lose.png";
+  static const String youWin = "assets/images/you_win.png";
 
+  static const String paused = "assets/images/paused.png";
+  static const String start = "assets/images/start.png";
+  static const String next = "assets/images/next.png";
   static const String crown = "assets/images/crown.png";
   static const String first = "assets/images/first.png";
   static const String second = "assets/images/second.png";
