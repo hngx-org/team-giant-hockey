@@ -1,16 +1,12 @@
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:team_giant_hockey/new_game/game_provider.dart';
 import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'core/app_export.dart';
-import 'services/repository/authentication_repository/authentication_repository.dart';
+
 
 AppTheme appTheme = AppTheme();
 void main() async {
@@ -30,12 +26,10 @@ void main() async {
 //   );
 // }
 
-  runApp(
-    MultiProvider(
-      providers: _providers,
-      child: const MyApp(),
-    ),
-  );
+  runApp(MultiProvider(
+    providers: _providers,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -55,8 +49,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 109, 109, 109),
-            ),
+                seedColor: const Color.fromARGB(255, 109, 109, 109),),
             useMaterial3: true,
           ),
           home: const GameMenuScreen(),

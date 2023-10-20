@@ -5,9 +5,11 @@ export '../../core/utils/image_constants.dart';
 export '../../themes/app_theme.dart';
 export '../../widgets/app_custom_button.dart';
 export 'package:firebase_core/firebase_core.dart';
-export '../../firebase_options.dart';
+export '../services/repository/firebase/firebase_options.dart';
 export '../../screens/auth/sign_up.dart';
 export 'package:get_storage/get_storage.dart';
-
-
+export '../services/repository/firebase/firebase.config.dart'; 
+export '../services/repository/authentication_repository/authentication_repository.dart';
 export 'package:google_fonts/google_fonts.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
+export '../services/repository/firebase/firebase_service.dart';

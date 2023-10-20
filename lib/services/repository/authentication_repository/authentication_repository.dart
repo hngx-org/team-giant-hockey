@@ -38,6 +38,8 @@ class AuthenticationRepository extends GetxController {
       if (_auth.currentUser != null) {
         // User signed up successfully, navigate to the GameMenuScreen
         Get.offAll(() => const GameMenuScreen());
+        // Save user data to Firestore
+      await saveUserDataToFirestore(_auth.currentUser!.uid, email);
       } else {
         // Handle a scenario where the user is not signed in
         Get.offAll(() => SignInScreen());
@@ -99,4 +101,22 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logout() async => await _auth.signOut();
+}
+
+
+Future<void> saveUserDataToFirestore(String userId, String email) async {
+  try {
+    final firestore = FirebaseFirestore.instance;
+    final userRef = firestore.collection('users').doc(userId);
+
+    await userRef.set({
+      'email': email,
+      // Add more user data fields as needed
+    });
+
+    print('User data saved to Firestore');
+  } catch (error) {
+    // Handle Firestore data saving error
+    print('Error saving user data to Firestore: $error');
+  }
 }
