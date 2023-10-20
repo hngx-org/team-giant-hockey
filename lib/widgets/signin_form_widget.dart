@@ -15,17 +15,22 @@ class _SignInFormWidgetState extends State<SignInFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return
+    
+    
+    
+     Form(
       key: _formKey,
       child: Expanded(
         child: Obx(() {
           return controller.isLoading.value
               ? Center(
-                  child: CircularProgressIndicator(), // Show a loading indicator
+                  child:
+                      CustomLoadingIndicator(), // Show a loading indicator
                 )
               : Container(
                    decoration: BoxDecoration(
-                  color: Colors.black, // Set the background color to black
+                  color:  AppTheme.appBackgroundColor, // Set the background color to black
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -144,19 +149,24 @@ class CustomLoadingIndicator extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Container(
-          width: 80, // Adjust the width as needed
-          height: 4, // Adjust the height as needed
-          decoration: BoxDecoration(
-            color: Colors.blue, // Color of the loading indicator
-            border: Border.all(
-              color: Colors.blue, // Border color
-              width: 2, // Border width
+        // Custom loading animation goes here.
+        // You can use any widgets or animations you like.
+
+        // Example: Using a rotating spinner animation
+        RotationTransition(
+          turns: AlwaysStoppedAnimation(45 / 360), // Rotate by 45 degrees
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.blue, // Color of the loading indicator
+              shape: BoxShape.circle,
             ),
-            borderRadius: BorderRadius.circular(10), // Adjust the border radius as needed
           ),
         ),
+
         SizedBox(height: 10), // Adjust the spacing as needed
+
         Text(
           'Loading...',
           style: TextStyle(color: Colors.blue, fontSize: 16),

@@ -2,21 +2,26 @@ import '../controller/sign_up_controller.dart';
 import '../core/app_export.dart';
 import '../screens/auth/sign_in.dart';
 
-class SignUpFormWidget extends StatelessWidget {
+class SignUpFormWidget extends StatefulWidget {
   const SignUpFormWidget({
     super.key,
   });
 
+  @override
+  State<SignUpFormWidget> createState() => _SignUpFormWidgetState();
+}
 
+class _SignUpFormWidgetState extends State<SignUpFormWidget> {
+  final controller = Get.put(SignUpController());
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignUpController());
-    final _formKey = GlobalKey<FormState>();
     return Form(
       key: _formKey,
       child: Expanded(
         child: Container(
-          color: Colors.black, // Set the background color to black
+          color:
+              AppTheme.appBackgroundColor, // Set the background color to black
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -80,7 +85,7 @@ class SignUpFormWidget extends StatelessWidget {
                   child: AppButton(
                     buttonText: 'Sign Up',
                     onPressed: () {
-                      if(_formKey.currentState!.validate()){
+                      if (_formKey.currentState!.validate()) {
                         SignUpController.instance.registerUser(
                           controller.email.text.trim(),
                           controller.password.text.trim(),
@@ -93,9 +98,9 @@ class SignUpFormWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text(
+                    Text(
                       'Already have an account?',
-                      style:GoogleFonts.abhayaLibre(
+                      style: GoogleFonts.abhayaLibre(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.normal,
