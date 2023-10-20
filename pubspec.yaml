@@ -95,6 +95,8 @@ flutter:
   assets:
     - assets/audio/background_music1.mp3
     - assets/audio/collision_sound.wav
+    - assets/audio/whistle.wav
+    - assets/audio/goal.wav
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see

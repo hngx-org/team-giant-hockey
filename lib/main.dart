@@ -10,6 +10,7 @@ import 'package:team_giant_hockey/new_game/game_provider.dart';
 import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'package:team_giant_hockey/themes/app_theme.dart';
+import 'dart:async';
 
 import 'core/app_export.dart';
 import 'firebase.config.dart';
@@ -57,7 +58,10 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: GameMenuScreen());
+            home: 
+            // CountdownScreen()
+            GameMenuScreen(),
+            );
       },
     );
   }
@@ -71,3 +75,49 @@ final _providers = <SingleChildWidget>[
   ChangeNotifierProvider(
       create: (context) => PaddleColorProvider()..initialize()),
 ];
+
+// class CountdownScreen extends StatefulWidget {
+//   @override
+//   _CountdownScreenState createState() => _CountdownScreenState();
+// }
+
+// class _CountdownScreenState extends State<CountdownScreen> {
+//   int count = 3;
+//   String countdownString = "3";
+//   Timer? countdownTimer;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     startCountdown();
+//   }
+
+
+
+//   @override
+//   void dispose() {
+//     countdownTimer?.cancel();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Game Countdown'),
+//       ),
+//       body: count == -1
+//           ? const SizedBox()
+//           : Center(
+//               child: AnimatedSwitcher(
+//                 duration: Duration(seconds: 1),
+//                 child: Text(
+//                   countdownString.toString(),
+//                   key: ValueKey<int>(count),
+//                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+//                 ),
+//               ),
+//             ),
+//     );
+//   }
+// }

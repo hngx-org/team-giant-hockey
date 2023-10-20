@@ -1,4 +1,3 @@
-
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,12 +23,11 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
   @override
   void initState() {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    if(FlameAudio.bgm.isPlaying){
-
+    if (FlameAudio.bgm.isPlaying) {
     } else {
       FlameAudio.bgm.play('background_music1.mp3');
     }
-    
+
     super.initState();
   }
 
@@ -41,32 +39,23 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: AppTheme.appBackgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Column(
-                children: [
-                  Image.asset(
-                    ImageConstant.gameAirString,
-                    scale: 4,
-                  ),
-                  Image.asset(
-                    ImageConstant.gameHockeyString,
-                    scale: 4,
-                  ),
-                ],
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Image.asset(
-                  ImageConstant.yellowPuck,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            Column(
+              children: [
+                Image.asset(
+                  ImageConstant.gameAirString,
+                  scale: 4,
+                ),
+                Image.asset(
+                  ImageConstant.gameHockeyString,
                   scale: 4,
                 ),
               ),
