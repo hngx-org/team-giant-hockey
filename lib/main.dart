@@ -14,20 +14,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
   await FirebaseService.initialize(); // Initialize Firebase
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  // Initialize AuthenticationRepository before runApp
-  Get.put(AuthenticationRepository());
-
-  // Initialize FlameAudio
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
+  // runApp(GameWidget(game: MyGame()));
+//   runApp(
+//     DevicePreview(
+//       enabled: false,
+//       builder: (context) => const MyApp(),
+//     ),
+//   );
+// }
 
-  runApp(
-    MultiProvider(
-      providers: _providers,
-      child: const MyApp(),
-    ),
-  );
+  runApp(MultiProvider(
+    providers: _providers,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,8 +49,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 109, 109, 109),
-            ),
+                seedColor: const Color.fromARGB(255, 109, 109, 109),),
             useMaterial3: true,
           ),
           home: const GameMenuScreen(),
