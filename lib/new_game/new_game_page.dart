@@ -743,13 +743,20 @@ class _NewGameScreenState extends State<NewGameScreen> {
                             isPaused = true;
                           });
                         },
-                        child: Center(
-                          child: Icon(
-                            Icons.pause,
-                            size: 55.h,
-                            color: AppTheme.whiteColor,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppTheme.whiteColor, width: 2),
+                            borderRadius: BorderRadius.circular(100),
                           ),
-                          // ),
+                          child: Center(
+                            child: Icon(
+                              Icons.pause,
+                              size: 55.h,
+                              color: AppTheme.whiteColor,
+                            ),
+                            // ),
+                          ),
                         ),
                         // ),
                       ),
@@ -803,7 +810,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                                 ),
                               ),
                           child: RotatedBox(
-                            quarterTurns: turn == player1.name ? 2 : 0,
+                            quarterTurns: 0,
+                            // turn == player1.name ? 2 : 0,
                             child: customCentreText(
                               inputText: textStart,
                               fontSize: textStartFontSize,
@@ -1011,8 +1019,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
                               buttonText: "RESTART",
                               onPressed: () {
                                 Get.back();
-                                Get.to(
-                                  NewGameScreen(
+                                Get.to(NewGameScreen(
                                   gameMode: widget.gameMode,
                                   speed: widget.speed,
                                   paddleType: widget.paddleType,

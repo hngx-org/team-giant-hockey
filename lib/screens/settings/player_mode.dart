@@ -7,6 +7,7 @@ import '../../new_game/game_enum.dart';
 import '../../new_game/new_game_page.dart';
 import '../../themes/app_theme.dart';
 import '../../widgets/custom_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class PlayerModeScreen extends StatefulWidget {
   const PlayerModeScreen({super.key});
@@ -136,88 +137,152 @@ class _PlayerModeScreenState extends State<PlayerModeScreen> {
               SizedBox(
                 height: getProportionateScreenHeight(70),
               ),
-              Center(
-                child: SizedBox(
-                  height: getProportionateScreenHeight(100),
-                  width: getProportionateScreenWidth(100),
-                  child: Image(
-                    image: AssetImage(pucks[puckNumber]),
-                  ),
-                ),
-              ),
+              // Center(
+              // child: SizedBox(
+              //   height: getProportionateScreenHeight(100),
+              //   width: getProportionateScreenWidth(100),
+              //   child: Image(
+              //     image: AssetImage(pucks[puckNumber]),
+              //   ),
+              // ),
+              // ),
+
+              CarouselSlider(
+                  options: CarouselOptions(
+                      initialPage: 1,
+                      autoPlay: false,
+                      enlargeCenterPage: true,
+                      aspectRatio: 2,
+                      enableInfiniteScroll: false,
+                      viewportFraction: 0.45,
+                      onPageChanged:
+                          (int index, CarouselPageChangedReason resaon) {
+                        setState(() {
+                          puckNumber = index;
+                          print(puckNumber);
+                          print(pucks[puckNumber]);
+                        });
+                      }),
+                  items: pucks
+                      .map(
+                        (mapString) => Column(
+                          children: [
+                            SizedBox(
+                              height: getProportionateScreenHeight(120),
+                              width: getProportionateScreenWidth(120),
+                              child: Image(
+                                image: AssetImage(mapString),
+                              ),
+                            ),
+                            customCentreText(
+                              inputText:
+                                  "${mapString.split("/").last.split("_").last.split(".").first} paddle",
+                              fontSize: 18,
+                              weight: FontWeight.w700,
+                              colorName: AppTheme.whiteColor,
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList()),
+
               SizedBox(
-                height: getProportionateScreenHeight(26),
+                height: getProportionateScreenHeight(40),
               ),
+
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: getProportionateScreenWidth(24),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       GestureDetector(
+              //         onTap: () {
+              //           setState(() {
+              //             if (puckNumber > 0) {
+              //               puckNumber = puckNumber - 1;
+              //               print(puckNumber);
+              //               print(pucks[puckNumber]);
+              //             }
+
+              //             // puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
+              //           });
+              //         },
+              //         child: Icon(
+              //           Icons.arrow_left_rounded,
+              //           size: getProportionateScreenWidth(60),
+              //           color: AppTheme.whiteColor,
+              //         ),
+              //       ),
+              //       GestureDetector(
+              //         onTap: () {
+              //           setState(() {
+              //             if (puckNumber < 3) {
+              //               puckNumber = puckNumber + 1;
+              //               print(puckNumber);
+              //               print(pucks[puckNumber]);
+              //             }
+
+              //             // puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
+              //           });
+              //         },
+              //         child: Icon(
+              //           Icons.arrow_right_rounded,
+              //           size: getProportionateScreenWidth(60),
+              //           color: AppTheme.whiteColor,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(24),
+                  horizontal: playerList[selected].title == "Double Player"
+                      ? getProportionateScreenWidth(50)
+                      : getProportionateScreenWidth(60),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (puckNumber > 0) {
-                            puckNumber = puckNumber - 1;
-                            print(puckNumber);
-                            print(pucks[puckNumber]);
-                          }
-
-                          // puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
-                        });
-                      },
-                      child: Icon(
+                child: GestureDetector(
+                  onTap: () {
+                    if (playerList[selected].title == "Single Player") {
+                      Get.to(DifficultyLevelScreen(
+                        paddleType: pucks[puckNumber],
+                      ));
+                    } else if (playerList[selected].title == "Double Player") {
+                      Get.to(NewGameScreen(
+                        gameMode: GameMode.player2,
+                        paddleType: pucks[puckNumber],
+                        speed: 6,
+                      ));
+                    }
+                    print(
+                      pucks[puckNumber],
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(
+                        Icons.arrow_right_sharp,
+                        size: 60,
+                        color: AppTheme.whiteColor,
+                      ),
+                      Center(
+                        child: Image.asset(
+                          playerList[selected].title == "Double Player"
+                              ? ImageConstant.start
+                              : ImageConstant.next,
+                          scale: 4,
+                        ),
+                      ),
+                      const Icon(
                         Icons.arrow_left_rounded,
-                        size: getProportionateScreenWidth(60),
+                        size: 60,
                         color: AppTheme.whiteColor,
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (puckNumber < 3) {
-                            puckNumber = puckNumber + 1;
-                            print(puckNumber);
-                            print(pucks[puckNumber]);
-                          }
-
-                          // puckNumber == 0 ? puckNumber = 1 : puckNumber = 0;
-                        });
-                      },
-                      child: Icon(
-                        Icons.arrow_right_rounded,
-                        size: getProportionateScreenWidth(60),
-                        color: AppTheme.whiteColor,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (playerList[selected].title == "Single Player") {
-                    Get.to(DifficultyLevelScreen(
-                      paddleType: pucks[puckNumber],
-                    ));
-                  } else if (playerList[selected].title == "Double Player") {
-                    Get.to(NewGameScreen(
-                      gameMode: GameMode.player2,
-                      paddleType: pucks[puckNumber],
-                      speed: 6,
-                    ));
-                  }
-                  print(
-                    pucks[puckNumber],
-                  );
-                },
-                child: Center(
-                    child: Image.asset(
-                  playerList[selected].title == "Double Player"
-                      ? ImageConstant.start
-                      : ImageConstant.next,
-                  scale: 4,
-                )),
               )
             ],
           ),

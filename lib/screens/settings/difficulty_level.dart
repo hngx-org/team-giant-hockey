@@ -139,7 +139,7 @@ class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(40),
+                  horizontal: getProportionateScreenWidth(50),
                 ),
                 child: GestureDetector(
                   onTap: () {
@@ -175,14 +175,7 @@ class _DifficultyLevelScreenState extends State<DifficultyLevelScreen> {
                           child: Image.asset(
                         ImageConstant.start,
                         scale: 4,
-                      )
-                          // customCentreText(
-                          //   inputText: 'START',
-                          //   fontSize: 32,
-                          //   weight: FontWeight.w700,
-                          //   colorName: const Color(0xff66FF30),
-                          // ),
-                          ),
+                      )),
                       const Icon(
                         Icons.arrow_left_rounded,
                         size: 60,
