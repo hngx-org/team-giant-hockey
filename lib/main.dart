@@ -9,11 +9,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:team_giant_hockey/new_game/game_provider.dart';
 import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
-import 'package:team_giant_hockey/themes/app_theme.dart';
-import 'dart:async';
-
 import 'core/app_export.dart';
-import 'firebase.config.dart';
 import 'services/repository/authentication_repository/authentication_repository.dart';
 
 AppTheme appTheme = AppTheme();
@@ -22,7 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
   // await FirebaseService.initialize(); // Initialize Firebase
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) => Get.put(AuthenticationRepository()));
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   // runApp(GameWidget(game: MyGame()));
 //   runApp(
@@ -52,14 +49,15 @@ class MyApp extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return GetMaterialApp(
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 109, 109, 109)),
-              useMaterial3: true,
-            ),
-            home: GameMenuScreen(),
-            );
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color.fromARGB(255, 109, 109, 109),),
+            useMaterial3: true,
+          ),
+          home: GameMenuScreen(),
+        );
       },
     );
   }
@@ -73,4 +71,3 @@ final _providers = <SingleChildWidget>[
   ChangeNotifierProvider(
       create: (context) => PaddleColorProvider()..initialize()),
 ];
-
