@@ -13,7 +13,7 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
-  await FirebaseService.initialize(); // Initialize Firebase
+  // await FirebaseService.initialize(); // Initialize Firebase
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
