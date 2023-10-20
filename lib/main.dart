@@ -13,18 +13,14 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
-  // await FirebaseService.initialize(); // Initialize Firebase
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((value) => Get.put(AuthenticationRepository()));
+  await FirebaseService.initialize(); // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Initialize AuthenticationRepository before runApp
+  Get.put(AuthenticationRepository());
+
+  // Initialize FlameAudio
   FlameAudio.bgm.initialize();
-  // runApp(GameWidget(game: MyGame()));
-//   runApp(
-//     DevicePreview(
-//       enabled: false,
-//       builder: (context) => const MyApp(),
-//     ),
-//   );
-// }
 
   runApp(MultiProvider(
     providers: _providers,
