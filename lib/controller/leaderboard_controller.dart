@@ -1,20 +1,19 @@
-// import '../core/app_export.dart';
-// import '../firebase_service.dart';
-// import '../screens/settings/leaderboard.dart';
-
-// class LeaderboardController extends GetxController {
-//   final FirestoreService _firestoreService = FirestoreService();
-//   RxList<LeaderboardModel> leaderboard = <LeaderboardModel>[].obs;
-
-//   Future<void> fetchLeaderboard() async {
-//     final documents = await _firestoreService.fetchLeaderboard();
-//     leaderboard.value = documents.map((doc) => LeaderboardModel.fromDocument(doc)).toList();
-//   }
-
-//   // Implement other functions for updating the leaderboard or handling data.
-// }
+import '../core/app_export.dart';
+import '../model/leaderboard_model.dart';
 
 
+
+class LeaderboardController extends GetxController {
+  final FirestoreService _firestoreService = FirestoreService();
+  RxList<LeaderboardModel> leaderboard = <LeaderboardModel>[].obs;
+
+  Future<void> fetchLeaderboard() async {
+    final documents = await _firestoreService.fetchLeaderboard();
+    leaderboard.value = documents.map((doc) => LeaderboardModel.fromDocument(doc)).toList();
+  }
+
+  // Implement other functions for updating the leaderboard or handling data.
+}
 
 
 // // class LeaderboardController extends GetxController {
