@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:team_giant_hockey/controller/menu_controller.dart';
 import 'package:team_giant_hockey/core/app_export.dart';
+import 'package:team_giant_hockey/main.dart';
 import 'package:team_giant_hockey/screens/settings/game_rule.dart';
 import 'package:team_giant_hockey/screens/settings/leaderboard.dart';
 import 'package:team_giant_hockey/screens/settings/player_mode.dart';
@@ -35,6 +36,7 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     final _menuController = Get.put(GameMenuController());
+    final _logInMenu = Get.put(LoggedInMenu());
 
     return Scaffold(
       // resizeToAvoidBottomInset: false,
@@ -69,40 +71,73 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
               ),
             ),
 
-            Column(
-              children: [
-                ...List.generate(
-                  _menuController.menus.length,
-                  (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        if (index == 0) {
-                          Get.to(PlayerModeScreen());
-                          // Get.to(GameWidget(game: MyGame()) );
-                        } else if (index == 1) {
-                          Get.to(GameRulesScreen());
-                        } else if (index == 2) {
-                          Get.to(SignUpScreen());
-                        } else if (index == 3) {
-                          Get.to(LeaderBoardScreen());
-                        } else if (index == 4) {
-                          SystemNavigator.pop();
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: customCentreText(
-                          inputText: _menuController.menus[index],
-                          fontSize: 32,
-                          weight: FontWeight.w700,
-                          colorName: AppTheme.whiteColor,
-                        ),
+            localStorage.read("isLoggedIn") == true
+                ? Column(
+                    children: [
+                      ...List.generate(
+                        _logInMenu.logMenu.length,
+                        (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (index == 0) {
+                                Get.to(PlayerModeScreen());
+                                // Get.to(GameWidget(game: MyGame()) );
+                              } else if (index == 1) {
+                                Get.to(GameRulesScreen());
+                              } else if (index == 2) {
+                                Get.to(LeaderBoardScreen());
+                              } else if (index == 3) {
+                                SystemNavigator.pop();
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: customCentreText(
+                                inputText: _menuController.menus[index],
+                                fontSize: 32,
+                                weight: FontWeight.w700,
+                                colorName: AppTheme.whiteColor,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      ...List.generate(
+                        _menuController.menus.length,
+                        (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (index == 0) {
+                                Get.to(PlayerModeScreen());
+                                // Get.to(GameWidget(game: MyGame()) );
+                              } else if (index == 1) {
+                                Get.to(GameRulesScreen());
+                              } else if (index == 2) {
+                                Get.to(SignUpScreen());
+                              } else if (index == 3) {
+                                Get.to(LeaderBoardScreen());
+                              } else if (index == 4) {
+                                SystemNavigator.pop();
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: customCentreText(
+                                inputText: _menuController.menus[index],
+                                fontSize: 32,
+                                weight: FontWeight.w700,
+                                colorName: AppTheme.whiteColor,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -110,6 +145,13 @@ class _GameMenuScreenState extends State<GameMenuScreen> {
                   ImageConstant.greenPuck,
                   scale: 4,
                 ),
+                localStorage.read("isLoggedIn") == true
+                    ? customCentreText(
+                        inputText: '${localStorage.read('fullName')}',
+                        fontSize: 14,
+                        weight: FontWeight.w500,
+                        colorName: AppTheme.whiteColor)
+                    : SizedBox(),
                 GestureDetector(
                   onTap: () {
                     Get.to(const SettingsScreen());

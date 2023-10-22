@@ -7,14 +7,14 @@ import 'package:team_giant_hockey/new_game/shared_pref.dart';
 import 'package:team_giant_hockey/screens/games/game_menu.dart';
 import 'core/app_export.dart';
 
-
 AppTheme appTheme = AppTheme();
+GetStorage localStorage = GetStorage();
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await AppSharedPreferences.instance.initialize();
   // await FirebaseService.initialize(); // Initialize Firebase
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((value) => Get.put(AuthenticationRepository()));
   FlameAudio.bgm.initialize();
   // runApp(GameWidget(game: MyGame()));
@@ -49,7 +49,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color.fromARGB(255, 109, 109, 109),),
+              seedColor: const Color.fromARGB(255, 109, 109, 109),
+            ),
             useMaterial3: true,
           ),
           home: const GameMenuScreen(),
