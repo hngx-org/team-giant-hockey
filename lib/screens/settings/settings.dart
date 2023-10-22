@@ -1,4 +1,6 @@
 import 'package:flame_audio/flame_audio.dart';
+import 'package:team_giant_hockey/main.dart';
+import 'package:team_giant_hockey/screens/auth/sign_in.dart';
 import 'package:team_giant_hockey/widgets/size_config.dart';
 import '../../core/app_export.dart';
 import '../../services/repository/authentication_repository/authentication_repository.dart';
@@ -16,40 +18,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // final AuthenticationRepository _authRepository = AuthenticationRepository();
   bool val = true;
   bool mus = true;
-  
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
       backgroundColor: AppTheme.appBackgroundColor,
       appBar: AppBar(
-          backgroundColor: AppTheme.appBackgroundColor,
-          centerTitle: true,
-          elevation: 0,
-          leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: const Icon(
-              Icons.arrow_left_rounded,
-              size: 70,
-              color: AppTheme.whiteColor,
-            ),
+        backgroundColor: AppTheme.appBackgroundColor,
+        centerTitle: true,
+        elevation: 0,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const Icon(
+            Icons.arrow_left_rounded,
+            size: 70,
+            color: AppTheme.whiteColor,
           ),
-          title: Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Image.asset(
-                    ImageConstant.settings,
-                    scale: 3.5,
-                  ),
-                ),
-          // customCentreText(
-          //   inputText: "SETTINGS",
-          //   fontSize: 32,
-          //   weight: FontWeight.w700,
-          //   colorName: AppTheme.whiteColor,
-          // ),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: Image.asset(
+            ImageConstant.settings,
+            scale: 3.5,
           ),
+        ),
+        // customCentreText(
+        //   inputText: "SETTINGS",
+        //   fontSize: 32,
+        //   weight: FontWeight.w700,
+        //   colorName: AppTheme.whiteColor,
+        // ),
+      ),
       body: SafeArea(
         child: Padding(
           padding:
@@ -112,7 +114,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(
                   height: getProportionateScreenHeight(158),
                 ),
-                
                 GestureDetector(
                   onTap: () {
                     // log out
@@ -137,9 +138,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         cancelTextColor: AppTheme.whiteColor,
                         buttonColor: AppTheme.whiteColor,
                         onConfirm: () async {
-
-                          AuthenticationRepository.instance.logout();
-
+                          if (localStorage.read('isLoggedIn') == true) {
+                            AuthenticationRepository.instance.logout();
+                          } else {
+                            Get.snackbar(
+                              'No User',
+                              'kindly log in',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: AppTheme.primaryColor,
+                              colorText: AppTheme.whiteColor,
+                            );
+                            
+                            Get.to(() => SignInScreen());
+                          }
                         },
                         onCancel: () {
                           Get.back();
@@ -164,8 +175,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
-
-
 
   GestureDetector buildSwitch(
       {required bool switcher, required void Function()? onTap}) {

@@ -1,10 +1,9 @@
-
 import 'package:team_giant_hockey/core/app_export.dart';
 
 import '../services/repository/authentication_repository/authentication_repository.dart';
 
 class SignInController extends GetxController {
-  static SignInController get instance => Get.find(); 
+  static SignInController get instance => Get.find();
 
   // TextField Controllers to get data from TextFields
   final email = TextEditingController();
@@ -15,7 +14,8 @@ class SignInController extends GetxController {
 
   void loginUser(String email, String password) {
     isLoading(true); // Set isLoading to true when the sign-in process starts
-    AuthenticationRepository.instance.loginUserWithEmailandPassword(email, password)
+    AuthenticationRepository.instance
+        .loginUserWithEmailAndPassword(email, password)
         .then((_) {
       // Set isLoading to false when the sign-in process is complete
       isLoading(false);

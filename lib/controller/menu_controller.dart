@@ -9,3 +9,12 @@ class GameMenuController extends GetxController {
     "EXIT",
   ];
 }
+
+class LoggedInMenu extends GetxController {
+  List<String> logMenu = [
+    "START",
+    "GAME RULES",
+    "LEADERBOARD",
+    "EXIT",
+  ];
+}
